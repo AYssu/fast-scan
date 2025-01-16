@@ -5,5 +5,5 @@
 记住默认输出目录 /storage/emulated/0/Android/data/com.fastscan/files/
 
 推荐直接执行二进制，因为生成的文件会在当前目录
-
+如果apk那个终端不好用直接用sh就行了 已适配虚拟机
 群: 903485530
