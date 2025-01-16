@@ -1,0 +1,9 @@
+1. 如果你是root用户，在mt运行的，运行run.sh即可，如果/data/local/tmp 不可用 就改一下脚本里面的运行目录
+2. 如果使用apk版本，root/虚拟机 输出的文件路径 /storage/emulated/0/Android/data/com.fastscan/files/
+3. 不适配框架，框架扫什么基址(苦笑)
+
+记住默认输出目录 /storage/emulated/0/Android/data/com.fastscan/files/
+
+推荐直接执行二进制，因为生成的文件会在当前目录
+
+群: 903485530
