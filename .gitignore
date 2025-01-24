@@ -1,0 +1,9 @@
+libs/
+obj/
+.vscode
+cmake-build-debug/
+.idea
+cmake-build-release
+ndk/obj
+ndk/libs
+FastScan*
