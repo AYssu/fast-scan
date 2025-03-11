@@ -1,6 +1,6 @@
 #!/bin/bash
 
-default_file="fast_scan"
+default_file="executable"
 # 使用默认值
 file_name=${1:-$default_file}
 
