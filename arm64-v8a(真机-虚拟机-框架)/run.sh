@@ -5,7 +5,6 @@ default_file="executable"
 file_name=${1:-$default_file}
 
 if [ $# -eq 0 ]; then
-    echo "[-] 传入参数: $0 <文件名>"
     echo "[-] 使用默认文件: $file_name"
 fi
 
