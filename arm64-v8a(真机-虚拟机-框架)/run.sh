@@ -13,14 +13,14 @@ if [ ! -f "$file_name" ]; then
     exit
 fi
 
-pkill $file_name 
+su -c pkill $file_name 
 file_path="/data/local/tmp/$file_name"
-cp -r $file_name ${file_path}
+su -c cp -r $file_name ${file_path}
 
 # 检查文件是否有执行权限
 if [ ! -x "${file_path}" ]; then
     echo "[*] 文件 \"$file_name\" 没有执行权限"
-    chmod +x "${file_path}"
+    su -c chmod +x "${file_path}"
     if [ ! -x "${file_path}" ]; then
         echo "[-] 给予权限失败 程序退出"
         exit
