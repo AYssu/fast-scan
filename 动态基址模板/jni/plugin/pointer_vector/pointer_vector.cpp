@@ -18,7 +18,16 @@ uintptr_t pointer::get_pointer64(uintptr_t start,std::vector<uintptr_t> data) {
     }
     return start + data[data.size()-1];
 }
-
+long pointer::get_pointer64(long start,std::vector<long> data) {
+    if (data.empty())
+        return {};
+    for (auto i = 0; i < data.size()-1; ++i) {
+        start = smemory::lsp<long>(start + data[i]);
+        if(start == 0)
+            return {};
+    }
+    return start + data[data.size()-1];
+}
 uint32_t pointer::get_pointer32(uint32_t start,std::vector<uint32_t> data) {
     if (data.empty())
         return {};
