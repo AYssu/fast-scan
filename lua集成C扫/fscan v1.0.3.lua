@@ -1,10 +1,10 @@
 local Arrays = { "🌸", "🌼", "🏵", "️🌻", "🌹", "🌷", "💐" , "🍂", "🍁", "🐽", "🐵", "🐻", "🐼" }
 
 -- 脚本版本和配置
-local SCRIPT_VERSION = "v1.0.2" -- 升级版本号，支持多语言
-local DEFAULT_LANGUAGE = "zh" -- 默认语言
+local SCRIPT_VERSION = "v1.0.3" -- 升级版本号，支持多语言
+local DEFAULT_LANGUAGE = "zh" -- 默认语
 
--- 多语言支持
+
 local languages = {
     zh = "中文",
     en = "English",
@@ -12,7 +12,7 @@ local languages = {
 }
 
 -- 当前语言
-local current_lang = DEFAULT_LANGUAGE
+local current_lang
 
 -- 语言文本
 local lang_text = {
@@ -58,7 +58,9 @@ local lang_text = {
             file1_not_exist = "文件1不存在！\n",
             click_confirm = "点击确定静默格式文本,过程可能会比较漫长,请耐心等待...",
             no_result = "无结果",
-            error = "错误："
+            error = "错误：",
+            format_file_pattern = "%s/output_%d.txt"
+
         },
         search = {
             install_first = "请先安装扫描程序! ",
@@ -69,7 +71,16 @@ local lang_text = {
             limit_module = "限制模块",
             output_file = "输出文件",
             click_confirm = "点击确定开始搜索指针,过程可能会比较漫长,请耐心等待...",
-            no_result = "无结果"
+            no_result = "无结果",
+             output_text = "输出文本格式",
+            delete_binary = "删除原始二进制文件",
+            conversion_complete = "转换已完成",
+            text_saved_at = "文本文件路径：\n%s",
+            binary_saved_at = "二进制文件路径：\n%s",
+            binary_deleted = "原始二进制文件已删除",
+            delete_failed = "警告：删除原始文件失败！"
+
+
         },
         compare = {
             install_first = "请先安装扫描程序! ",
@@ -109,7 +120,7 @@ local lang_text = {
             permission_failure = "权限设置失败！ | 总耗时: %.2f秒",
             error = "错误：%s",
             unknown_error = "未知错误",
-            format_file_pattern = "%s/格式结果_%d.txt",
+         --   format_file_pattern = "%s/格式结果_%d.txt",
             compare_file_pattern = "%s/对比结果_%d.txt",
             output_file_pattern = "out[%d].bin",
             title = "安装程序",
@@ -243,7 +254,7 @@ local lang_text = {
             permission_failure = "Permission setting failed! | Total time: %.2f seconds",
             error = "Error: %s",
             unknown_error = "Unknown error",
-            format_file_pattern = "%s/format_result_%d.txt",
+        --    format_file_pattern = "%s/format_result_%d.txt",
             compare_file_pattern = "%s/compare_result_%d.txt",
             output_file_pattern = "out[%d].bin",
             title = "Install Program",
@@ -377,7 +388,7 @@ local lang_text = {
             permission_failure = "Установка разрешений не удалась! | Общее время: %.2f секунд",
             error = "Ошибка: %s",
             unknown_error = "Неизвестная ошибка",
-            format_file_pattern = "%s/результат_формата_%d.txt",
+        --    format_file_pattern = "%s/результат_формата_%d.txt",
             compare_file_pattern = "%s/результат_сравнения_%d.txt",
             output_file_pattern = "out[%d].bin",
             title = "Установить программу",
@@ -420,49 +431,95 @@ local lang_text = {
     }
 }
 
--- 选择语言函数
 local function SelectLanguage()
     local lang_options = {}
-    for code, name in pairs(languages) do
+    for _, name in pairs(languages) do
         table.insert(lang_options, name)
     end
-    
+
     local choice = gg.choice(lang_options, nil, "Select Language / 选择语言 / Выберите язык")
     if not choice then
-        return current_lang -- 返回当前语言，不变更
+        return current_lang 
     end
-    
+
     local i = 1
     local new_lang = current_lang
-    for code, _ in pairs(languages) do
+    for code in pairs(languages) do
         if i == choice then
             new_lang = code
             break
         end
         i = i + 1
     end
-    
-    -- 显示切换确认
+
     if new_lang ~= current_lang then
         gg.toast(string.format(lang_text[new_lang].language.language_switched, languages[new_lang]))
     end
-    
+
     return new_lang
 end
 
--- 保存当前语言设置
+-- 保存语言设置
 local function SaveLanguageSettings()
-    local cfg_file = gg.EXT_FILES_DIR .. "/" .. gg.getFile():match("[^/]+$") .. "lang.cfg"
-    local cfg = {}
-    cfg.lang = current_lang
-    gg.saveVariable(cfg, cfg_file)
+    local path = gg.EXT_FILES_DIR .. "/lang.cfg"
+    local file = io.open(path, "w")
+    if file then
+        file:write(current_lang or "zh")
+        file:close()
+    else
+        gg.toast("❌ 保存语言设置失败：无法写入文件")
+    end
 end
 
 -- 加载语言设置
 local function LoadLanguageSettings()
-    local cfg_file = gg.EXT_FILES_DIR .. "/" .. gg.getFile():match("[^/]+$") .. "lang.cfg"
-    local cfg = loadfile(cfg_file) and loadfile(cfg_file)() or {}
-    return cfg.lang or "zh"
+    local path = gg.EXT_FILES_DIR .. "/lang.cfg"
+    local file = io.open(path, "r")
+    if file then
+        local lang = file:read("*a")
+        file:close()
+        if lang and languages[lang] then
+            return lang
+        end
+    end
+    return "zh" -- 默认语言
+end
+
+local function IsInitialized()
+    local path = gg.EXT_FILES_DIR .. "/initialized.flag"
+    local file = io.open(path, "r")
+    if file then
+        file:close()
+        return true
+    end
+    return false
+end
+
+
+local function MarkInitialized()
+    local path = gg.EXT_FILES_DIR .. "/initialized.flag"
+    local file = io.open(path, "w")
+    if file then
+        file:write("1")
+        file:close()
+    end
+end
+
+-- 初始化
+local function Initialize()
+    current_lang = LoadLanguageSettings()
+
+    if not IsInitialized() then
+        local old_lang = current_lang
+        current_lang = SelectLanguage()
+
+        if old_lang ~= current_lang then
+            SaveLanguageSettings()
+            gg.toast(lang_text[current_lang].language.language_setting_saved)
+        end
+        MarkInitialized()
+    end
+--   gg.alert("当前语言：" .. languages[current_lang])
 end
 
 local file_dir = gg.FILES_DIR
@@ -522,12 +579,12 @@ local function Main()
 
     local menu_options = {
         S .. "1." .. lang_text[current_lang].menu.base_search .. S_END,
-        S .. "2." .. lang_text[current_lang].menu.output_text .. S_END,
-        S .. "3." .. lang_text[current_lang].menu.format_compare .. S_END,
-        S .. "4." .. lang_text[current_lang].menu.install_program .. S_END,
-        S .. "5." .. lang_text[current_lang].menu.specify_module .. S_END,
-        S .. "6." .. lang_text[current_lang].menu.exit_script .. S_END,
-        S .. "7." .. lang_text[current_lang].language.switch_language .. S_END,
+    --    S .. "2." .. lang_text[current_lang].menu.output_text .. S_END,
+        S .. "2." .. lang_text[current_lang].menu.format_compare .. S_END,
+        S .. "3." .. lang_text[current_lang].menu.install_program .. S_END,
+        S .. "4." .. lang_text[current_lang].menu.specify_module .. S_END,
+        S .. "5." .. lang_text[current_lang].menu.exit_script .. S_END,
+        S .. "6." .. lang_text[current_lang].language.switch_language .. S_END,
       --  S .. "8.? Help / 帮助 / Помощь" .. S_END
     }
 
@@ -550,17 +607,16 @@ local function Main()
 
     if SN == 1 then
         SM()
+    
     elseif SN == 2 then
-        GS()
-    elseif SN == 3 then
         DB()
-    elseif SN == 4 then
+    elseif SN == 3 then
         AZ()
-    elseif SN == 5 then
+    elseif SN == 4 then
         local_modules = MK()
-    elseif SN == 6 then
+    elseif SN == 5 then
         TC()
-    elseif SN == 7 then
+    elseif SN == 6 then
         -- 切换语言
         current_lang = SelectLanguage()
         SaveLanguageSettings() -- 保存语言设置
@@ -688,81 +744,7 @@ function MK()
     return selected_modules
 end
 
-function GS()
-    if not file_exists(bin_save_path) then
-        gg.alert(lang_text[current_lang].output.install_first)
-        return
-    end
 
-    local cfg_file = gg.EXT_FILES_DIR .. "/" .. gg.getFile():match("[^/]+$") .. "output.cfg"
-    local cfg = loadfile(cfg_file) and loadfile(cfg_file)() or {}
-    local pkg = gg.getTargetPackage() or "none"
-
-    local def = cfg[pkg] or { save, save, "" } -- 文件1、文件2、输出文件
-
-    -- 自定义提示
-    local prompt_msg = lang_text[current_lang].output.default_output_path
-    local file1 = def[1]
-
-    local out_dir = file1:match("^(.*)/") or save
-    local count = 1
-    while true do
-        local default_out_path = string.format(lang_text[current_lang].install.format_file_pattern, out_dir, count)
-        if not file_exists(default_out_path) then
-            def[2] = default_out_path
-            break
-        end
-        count = count + 1
-    end
-
-    local compare =
-        gg.prompt(
-            { lang_text[current_lang].output.format_file, lang_text[current_lang].output.output_file },
-            def,
-            { "file", "file" },
-            { desc1 = lang_text[current_lang].output.select_first_file, desc3 = string.format(prompt_msg, out_dir, count) }
-        )
-
-    if not compare or #compare < 2 then
-        return
-    end
-
-    -- 检查文件存在
-    local file1Exists = file_exists(compare[1])
-    if not file1Exists  then
-        gg.alert(lang_text[current_lang].output.error .. "\n" .. (not file1Exists and lang_text[current_lang].output.file1_not_exist or ""))
-        return
-    end
-
-    cfg[pkg] = compare
-    gg.saveVariable(cfg, cfg_file)
-
-    local bit = gg.getTargetInfo().x64 or false
-    local bit_str = bit and "64" or "32"
-    local cmd =
-        string.format(
-            "%s --flag output --bit %s --format %s --out %s",
-            bin_save_path,
-            bit_str,
-            compare[1],
-            compare[2]
-        )
-
-    gg.alert(lang_text[current_lang].output.click_confirm)
-    local result = run_command(cmd, true)
-
-    local display_result = ""
-    if type(result) == "table" and result.s then
-        display_result = table.concat(result.s, "\n")
-    elseif type(result) == "string" then
-        display_result = result
-    end
-
-    gg.alert((display_result ~= "" and display_result or lang_text[current_lang].output.no_result))
-end
-
-
--- 基址搜索函数
 function SM()
     if not file_exists(bin_save_path) then
         gg.alert(lang_text[current_lang].search.install_first)
@@ -777,9 +759,12 @@ function SM()
     local cfg_file = gg.EXT_FILES_DIR .. "/" .. gg.getFile():match("[^/]+$") .. "point.cfg"
     local cfg = loadfile(cfg_file) and loadfile(cfg_file)() or {}
     local pkg = gg.getTargetPackage() or "none"
+    
+  
     local file_path = save .. get_next_available_file(save)
-    local def = cfg[pkg] or { "0xFFFFFF", "4", "2000", file_path }
+    local def = cfg[pkg] or { "0xFFFFFF", "4", "2000", file_path, false }
 
+  
     local modules_list = {}
     for _, value in pairs(local_modules) do
         table.insert(modules_list, value.display_name)
@@ -792,46 +777,100 @@ function SM()
         lang_text[current_lang].search.scan_level, 
         lang_text[current_lang].search.search_range, 
         lang_text[current_lang].search.limit_module, 
-        lang_text[current_lang].search.output_file 
-    }, def, { "txt", "txt", "txt", "", "file" }, def)
+        lang_text[current_lang].search.output_file,
+        lang_text[current_lang].search.output_text 
+    }, def, { 
+        "txt", "txt", "txt", "", "file", "checkbox"
+    }, def)
     
-    if not scan or #scan ~= 5 then
+    if not scan or #scan < 5 then
         return
     end
 
-    local only_lib = ""
-    if def[4] ~= "" then
-        only_lib = "--lib=" .. scan[4]
-    end
+    local only_lib = scan[4] ~= "" and "--lib=" .. scan[4] or ""
     cfg[pkg] = scan
     gg.saveVariable(cfg, cfg_file)
 
     local bit = gg.getTargetInfo().x64 or false
     local bit_str = bit and "64" or "32"
-    local cmd =
-        string.format(
-            "%s --pid %d --flag search --bit %s --pointers %s --level %s --offset %s %s --out %s",
-            bin_save_path,
-            gg.getTargetInfo().pid or 0,
-            bit_str,
-            scan[1],
-            scan[2],
-            scan[3],
-            only_lib,
-            scan[5]
-        )
+    
+   
+    local bin_file = scan[5]
+    local search_cmd = string.format(
+        "%s --pid %d --flag search --bit %s --pointers %s --level %s --offset %s %s --out %s",
+        bin_save_path,
+        gg.getTargetInfo().pid or 0,
+        bit_str,
+        scan[1],
+        scan[2],
+        scan[3],
+        only_lib,
+        bin_file
+    )
 
     gg.alert(lang_text[current_lang].search.click_confirm)
-    local result = run_command(cmd, true)
-
-    local display_result = ""
-    if type(result) == "table" and result.s then
-        display_result = table.concat(result.s, "\n")
-    elseif type(result) == "string" then
-        display_result = result
+    
+  
+    local search_result = run_command(search_cmd, true)
+    
+  
+    if not scan[6] then
+        local display_result = ""
+        if type(search_result) == "table" and search_result.s then
+            display_result = table.concat(search_result.s, "\n")
+        elseif type(search_result) == "string" then
+            display_result = search_result
+        end
+        
+        gg.alert((display_result ~= "" and display_result or lang_text[current_lang].search.no_result) 
+                .. "\n\n" .. string.format(lang_text[current_lang].search.binary_saved_at, bin_file))
+        return
     end
 
-    gg.alert((display_result ~= "" and display_result or lang_text[current_lang].search.no_result))
+  
+    local txt_file = bin_file:match("(.+)%.") and bin_file:gsub("%.bin$", ".txt") or bin_file .. ".txt"
+    
+  
+    local convert_cmd = string.format(
+        "%s --flag output --bit %s --format %s --out %s",
+        bin_save_path,
+        bit_str,
+        bin_file,
+        txt_file
+    )
+    
+    -- 执行转换
+    local convert_result = run_command(convert_cmd, true)
+    
+   
+    local delete_success = true
+    if file_exists(bin_file) then
+        delete_success = os.remove(bin_file)
+    end
+
+  
+    local final_msg = ""
+    
+ 
+    if type(convert_result) == "table" and convert_result.s then
+        final_msg = table.concat(convert_result.s, "\n")
+    elseif type(convert_result) == "string" then
+        final_msg = convert_result
+    else
+        final_msg = lang_text[current_lang].search.no_result
+    end
+    
+  
+    final_msg = final_msg .. "\n\n" .. string.format(lang_text[current_lang].search.text_saved_at, txt_file)
+    
+   
+    if delete_success then
+        final_msg = final_msg .. "\n" .. lang_text[current_lang].search.binary_deleted
+    else
+        final_msg = final_msg .. "\n" .. lang_text[current_lang].search.delete_failed
+    end
+    
+    gg.alert(final_msg)
 end
 
 -- 格式对比函数
@@ -20791,27 +20830,7 @@ local function ShowHelp()
     gg.alert(help_msg)
 end
 
--- 初始化语言选择
-local function Initialize()
-    -- 先尝试加载保存的语言设置
-    current_lang = LoadLanguageSettings()
-    
-    -- 如果是第一次运行或用户要求选择语言，则显示语言选择对话框
-    local firstRun = gg.isVisible() -- 如果可见，则认为是第一次运行
-    if firstRun then
-        local old_lang = current_lang
-        current_lang = SelectLanguage()
-        
-        -- 如果语言改变了，保存设置
-        if old_lang ~= current_lang then
-            SaveLanguageSettings()
-            gg.toast(lang_text[current_lang].language.language_setting_saved)
-        end
-    end
-    
-    -- 显示当前语言
-    gg.toast(languages[current_lang])
-end
+
 
 -- 脚本入口
 Initialize()
