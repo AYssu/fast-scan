@@ -27,8 +27,10 @@ LOCAL_SRC_FILES := main.cpp \
 
 # 阿夜 指针测试
 LOCAL_SRC_FILES += plugin/test/test.cpp
-LOCAL_SRC_FILES += plugin/pointer_vector/pointer_vector.cpp
+LOCAL_SRC_FILES += plugin/pointer_help/pointer_help.cpp
+# LOCAL_SRC_FILES += plugin/feature_code/feature.cpp
 # 阿夜 指针测试
+
 
 # 设置链接器标志
 LOCAL_LDFLAGS += -llog -landroid -lEGL -lGLESv3 

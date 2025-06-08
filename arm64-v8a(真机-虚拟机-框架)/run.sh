@@ -8,6 +8,12 @@ if [ $# -eq 0 ]; then
     echo "[-] 使用默认文件: $file_name"
 fi
 
+# 检查是否为 root 用户
+if [ "$(id -u)" -ne 0 ]; then
+    echo "[-] 请以 root 方式执行此脚本"
+    exit 1
+fi
+
 if [ ! -f "$file_name" ]; then
     echo "[-] 文件 \"$file_name\" 不存在"
     exit
