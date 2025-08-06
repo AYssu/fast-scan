@@ -3,7 +3,7 @@
 # 定义ndk路径列表
 ndk_paths=(
     "/data/user/0/aidepro.top/no_backup/ndksupport-1710240003/android-ndk-aide/ndk-build"
-    "/data/data/com.termux/files/home/android-ndk-r24/ndk-build"
+    "/data/data/com.termux/files/home/android-ndk-r21e/ndk-build"
 )
 
 # 遍历ndk路径列表
