@@ -7,3 +7,4 @@ cmake-build-release
 ndk/obj
 ndk/libs
 /FastScan*.zip
+/v1

@@ -10,6 +10,7 @@
  #include <unordered_map>
 
  std::string verify_host = OBFUSCATE("https://www.easyverify.cn/api");// 域名
+ 
  std::string verify_project_id = OBFUSCATE("10018");                                                               // 程序PID
  std::string verify_project_key = OBFUSCATE("KWN1KBXDE9FA");                                                       //程序密钥
  std::string verify_project_base64 = OBFUSCATE("UCPm8YnZsldF1pwVyhoKu3MkAJW2cDREfLSgxqT/iHabN0Qt5z6Ivj4B+OeGX7r9");// base64自定义编码集
@@ -37,18 +38,18 @@
  std::string verify_web_link = OBFUSCATE("2IFWKTCDCCJP");// 网页登录 返回数据无加密 无需设置code
  std::string verify_web_code = OBFUSCATE("200");// 网页登录返回code
 
- std::string user_login_link = OBFUSCATE("1KEKHE06JSEG");// 用户登录
+ std::string user_login_link = OBFUSCATE("EKPWLMHVPW50");// 用户登录
  std::string user_login_code = OBFUSCATE("200");// 用户登录code
 
- std::string user_heart_link = OBFUSCATE("NXKZF4P5EHPP");// 用户登录
- std::string user_heart_code = OBFUSCATE("200");// 用户登录code
+ std::string user_heart_link = OBFUSCATE("EKPWLMHVPW50");// 用户心跳
+ std::string user_heart_code = OBFUSCATE("200");// 用户心跳code
 
  std::string file_link = OBFUSCATE("9FHTGWCW40A0");// 文件下载
 
- std::string main_method_name = OBFUSCATE("main"); // 主方法
- std::unordered_map<std::string ,std::function<void()>> method_map;
+ std::unordered_map<std::string, std::function<std::any(std::vector<std::any>)>> method_map;
 
- int verify_encryption = 1;// 默认1 base64 自定义编码集 2 rsa非对称加密
+ bool time_enable = true;       // 函数碰撞 会保护变量 速度会慢一点
+ int verify_encryption = 1;// 默认1 base64 自定义编码集 2 rsa非对称加密 3 国密(未支持) 4AES (未支持)
  #endif //SEAV3_EASY_VERFY_H
 
 

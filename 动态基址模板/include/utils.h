@@ -40,6 +40,10 @@ namespace sutils {
     std::string to_md5(const std::string &origin, bool uppercase = false);// md5
     std::string sha256(const std::string &input, bool uppercase = false); // SHA-256
 
+    std::string rc4_crypt(const std::string &data, const std::string &key);// RC4
+
+    std::string aes128_encrypt(const std::string &data, const std::string &key);
+    std::string aes128_decrypt(const std::string &data, const std::string &key);
 
     std::string pem_format(const std::string &key, bool private_ = false);                      // pem format
     std::string rsa_public_encrypt(const std::string &clear_text, const std::string &pub_key);  // rsa encrypt
@@ -50,6 +54,7 @@ namespace sutils {
     std::string execute_shell_command(const std::string &command);// execute shell command return
     std::string get_imei(int result = 1,bool log = false);                                       // result: 1:默认hex->md5 2.hex->sha256 3.base64 log:是否打印日志
     
+    std::string format_local_datetime(const std::string &pattern = "%Y%m%d%H");
     
     void string_to_uintptr(uintptr_t &variable,const std::string &hex_str); // 将十六进制字符串转换为无符号整数
     void string_to_long(long &variable,const std::string &hex_str);// 将十六进制字符串转换为长整数

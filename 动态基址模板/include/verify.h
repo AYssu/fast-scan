@@ -6,6 +6,7 @@
 #include <string>
 #include <unordered_map>
 
+#include <any>
 extern std::string verify_host;// verify host 域名
 
 extern std::string verify_project_id;    // 程序PID
@@ -44,9 +45,10 @@ extern std::string user_heart_code;// 用户登录code
 extern std::string file_link;// 文件下载
 
 extern int verify_encryption;       // 加密方式 1 base64自定义编码集 2 rsa非对称加密(推荐)
-extern std::string main_method_name;// 主方法
+extern bool time_enable;       // 函数碰撞 会保护变量 速度会慢一点
 
-extern std::unordered_map<std::string, std::function<void()>> method_map;
+extern std::unordered_map<std::string, std::function<std::any(std::vector<std::any>)>> method_map;
+
 namespace sverify {
 
     struct verify_json {
@@ -75,23 +77,23 @@ namespace sverify {
         bool update_must;          // 是否强制更新
         time_t timestamp;          // 服务器时间戳
         std::string error_message; // 失败的错误信息
-        FILE *file; // 文件句柄
-        size_t file_size; // 文件大小
+        FILE *file;                // 文件句柄
+        size_t file_size;          // 文件大小
     };
 
 
-    bool get_notice(verify_json &json, bool log = false);                                                                                       // 获取程序公告
-    bool get_update(verify_json &json, bool log = false);                                                                                       // 获取程序更新信息
-    bool get_variables(verify_json &json, bool log = false);                                                                                    // 获取程序变量
-    bool bind_card(const std::string &kami_, const std::string &imei_, sverify::verify_json &json_, bool log = false);                          // 单码卡密绑定
-    bool unbind_card(const std::string &kami_, const std::string &imei_, sverify::verify_json &json_, bool log = false);                        // 单码卡密换绑
-    bool heart_beat(const std::string &cid, const std::string &imei_, const std::string &token_, sverify::verify_json &json_, bool log = false);// 单码卡密换绑
-    bool web_bind(const std::string &code_, const std::string &imei_, sverify::verify_json &json_, bool log = false);                           // 网页登录
-    bool user_login(const std::string &username_, const std::string &password_, sverify::verify_json &json_, bool log = false);                 // 用户登录
-    bool user_heart_beat(const std::string &cid, const std::string &token_, sverify::verify_json &json_, bool log = false);                     // 用户心跳
-    bool file_download(const std::string &fid, const std::string &md5,const std::string &imei, sverify::verify_json &json_, bool log = false);                     // 用户心跳
-    void init_method();                                                                                                                         // 初始化逻辑方法
-
+    bool get_notice(verify_json &json, bool log = false);                                                                                                               // 获取程序公告
+    bool get_update(verify_json &json, bool log = false);                                                                                                               // 获取程序更新信息
+    bool get_variables(verify_json &json, bool log = false);                                                                                                            // 获取程序变量
+    bool bind_card(const std::string &kami_, const std::string &imei_, sverify::verify_json &json_, bool log = false);                                                  // 单码卡密绑定
+    bool unbind_card(const std::string &kami_, const std::string &imei_, sverify::verify_json &json_, bool log = false);                                                // 单码卡密换绑
+    bool heart_beat(const std::string &cid, const std::string &imei_, const std::string &token_, sverify::verify_json &json_, bool log = false);                        // 单码卡密换绑
+    bool web_bind(const std::string &code_, const std::string &imei_, sverify::verify_json &json_, bool log = false);                                                   // 网页登录
+    bool user_login(const std::string &username_, const std::string &password_, sverify::verify_json &json_, bool log = false);                                         // 用户登录
+    bool user_heart_beat(const std::string &cid, const std::string &token_, sverify::verify_json &json_, bool log = false);                                             // 用户心跳
+    bool file_download(const std::string &fid, const std::string &md5, const std::string &imei, const std::string &path, sverify::verify_json &json_, bool log = false);// 用户心跳
+    std::any call_function(const std::function<std::any(std::vector<std::any>)>& func, std::vector<std::any> args);                                                                                                                                                 // 初始化逻辑方法
+    void safe_module(bool log);                                                                                                                                         //启用安全模式
 }
 
 
