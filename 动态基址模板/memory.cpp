@@ -7,7 +7,7 @@ bool init(const std::string &package);
 
 int main(int argc, char *argv[]) {
 
-    init("gg.pointer");
+    init("com.tencent.tmgp.cf");
 
     auto module_base = smemory::get_module_base_str("libgame.so", 1, "Xa" );// 注意多了一个str的方法 支持字符串 注意大写
 

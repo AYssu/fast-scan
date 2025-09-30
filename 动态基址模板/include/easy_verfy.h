@@ -8,9 +8,9 @@
  #include <iostream>
  #include <obfuscate.h>
  #include <unordered_map>
-
+ #include <any>
  std::string verify_host = OBFUSCATE("https://www.easyverify.cn/api");// 域名
- 
+
  std::string verify_project_id = OBFUSCATE("10018");                                                               // 程序PID
  std::string verify_project_key = OBFUSCATE("KWN1KBXDE9FA");                                                       //程序密钥
  std::string verify_project_base64 = OBFUSCATE("UCPm8YnZsldF1pwVyhoKu3MkAJW2cDREfLSgxqT/iHabN0Qt5z6Ivj4B+OeGX7r9");// base64自定义编码集
@@ -48,8 +48,7 @@
 
  std::unordered_map<std::string, std::function<std::any(std::vector<std::any>)>> method_map;
 
- bool time_enable = true;       // 函数碰撞 会保护变量 速度会慢一点
+bool time_enable = true;       // 函数碰撞 会保护变量 速度会慢一点
  int verify_encryption = 1;// 默认1 base64 自定义编码集 2 rsa非对称加密 3 国密(未支持) 4AES (未支持)
  #endif //SEAV3_EASY_VERFY_H
-
 

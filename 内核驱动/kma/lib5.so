@@ -1,0 +1,3 @@
+#!/bin/sh
+export LD_PRELOAD="$(dirname "$0")/libkma.so"
+exec "$0.primary" "$@"

@@ -9,8 +9,6 @@
 #include <filesystem>
 #include <iomanip>
 #include <iostream>
-#include "readline/history.h"
-#include "readline/readline.h"
 #include <regex>
 #include "sutils.h"
 #include <sstream>

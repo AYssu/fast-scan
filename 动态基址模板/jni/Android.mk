@@ -20,7 +20,7 @@ LOCAL_CPPFLAGS := -std=c++17 -fvisibility=hidden
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../include
 
 # 设置源文件路径
-LOCAL_SRC_FILES := ../main.cpp \
+LOCAL_SRC_FILES := ../memory.cpp \
               ../src/syscall_rv.cpp
     
 # 设置链接器标志
