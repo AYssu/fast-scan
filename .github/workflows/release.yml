@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'  # 当推送 v 开头的 tag 时触发，如 v1.0.0, v2.1.0
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 获取所有历史记录和标签
+      
+      - name: Get tag name
+        id: tag
+        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+      
+      - name: Create source archive
+        run: |
+          # 创建源码压缩包（包含所有文件）
+          zip -r fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip . \
+            -x "*.git*" \
+            -x "*node_modules*" \
+            -x "*.github*"
+          
+          # 创建文档和脚本包
+          mkdir -p release-files
+          
+          # 复制主要文档和脚本
+          cp README.md release-files/ 2>/dev/null || true
+          cp 使用教程.txt release-files/ 2>/dev/null || true
+          
+          # 复制动态基址模板
+          if [ -d "动态基址模板" ]; then
+            cp -r "动态基址模板" release-files/
+          fi
+          
+          # 复制扫描软件
+          if [ -d "扫描软件" ]; then
+            cp -r "扫描软件" release-files/
+          fi
+          
+          # 复制lua集成C扫
+          if [ -d "lua集成C扫" ]; then
+            cp -r "lua集成C扫" release-files/
+          fi
+          
+          # 打包文档和工具
+          cd release-files
+          zip -r ../fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip .
+          cd ..
+      
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          cat > release_notes.md << 'EOF'
+          ## FastScan ${{ steps.tag.outputs.TAG_NAME }}
+          
+          ### 📦 下载说明
+          
+          - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip**: 完整源码包
+          - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip**: 工具和文档包（包含扫描软件、动态基址模板等）
+          
+          ### 🚀 快速开始
+          
+          1. 下载对应的压缩包
+          2. 解压到目标目录
+          3. 参考 README.md 或 使用教程.txt 开始使用
+          
+          ### ⚠️ 使用须知
+          
+          - 需要 Root 权限运行
+          - 支持真机64位、虚拟机64位、模拟器64位
+          - 详细使用说明请查看文档
+          
+          ### 📝 更新内容
+          
+          请查看提交记录了解详细更新内容。
+          EOF
+          
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          cat release_notes.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.TAG_NAME }}
+          name: FastScan ${{ steps.tag.outputs.TAG_NAME }}
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
+          files: |
+            fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip
+            fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -rf release-files
+          rm -f release_notes.md
+
