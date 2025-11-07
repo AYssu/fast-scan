@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'  # 当推送 v 开头的 tag 时触发，如 v1.0.0, v2.1.0
 
+permissions:
+  contents: write  # 允许创建 release 和上传文件
+
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
