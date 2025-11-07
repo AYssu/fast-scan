@@ -1,10 +1,10 @@
-# FastScan v2.1.0
+# FastScan v2.2.1
 
 <div align="center">
 
 **高性能指针链扫描与对比工具**
 
-[![Version](https://img.shields.io/badge/version-2.1.0-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-2.2.1-blue.svg)](#)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Android-green.svg)](#)
 [![Architecture](https://img.shields.io/badge/arch-x64%20%7C%20ARM64-orange.svg)](#)
 

@@ -30,7 +30,18 @@ jobs:
             -x "*node_modules*" \
             -x "*.github*"
           
-          # 创建文档和脚本包
+          # 提取 APK 文件（单独打包）
+          mkdir -p apk-files
+          find . -name "*.apk" -exec cp {} apk-files/ \;
+          
+          # 如果找到 APK 文件，则打包
+          if [ -n "$(ls -A apk-files)" ]; then
+            cd apk-files
+            zip -r ../FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip *.apk
+            cd ..
+          fi
+          
+          # 创建文档和脚本包（不包含 APK）
           mkdir -p release-files
           
           # 复制主要文档和脚本
@@ -42,9 +53,11 @@ jobs:
             cp -r "动态基址模板" release-files/
           fi
           
-          # 复制扫描软件
+          # 复制扫描软件（但排除 APK 文件）
           if [ -d "扫描软件" ]; then
-            cp -r "扫描软件" release-files/
+            mkdir -p release-files/扫描软件
+            rsync -av --exclude='*.apk' "扫描软件/" "release-files/扫描软件/" 2>/dev/null || \
+            find "扫描软件" -type f ! -name "*.apk" -exec cp --parents {} release-files/ \; 2>/dev/null || true
           fi
           
           # 复制lua集成C扫
@@ -65,11 +78,18 @@ jobs:
           
           ### 📦 下载说明
           
+          - **FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip**: APK 安装包（推荐下载）
           - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip**: 完整源码包
-          - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip**: 工具和文档包（包含扫描软件、动态基址模板等）
+          - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip**: 工具和文档包（包含扫描软件、动态基址模板等，不含APK）
           
           ### 🚀 快速开始
           
+          #### 方式一：直接使用 APK（推荐）
+          1. 下载 **FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip**
+          2. 解压并安装 APK 到手机
+          3. 开始使用
+          
+          #### 方式二：使用源码
           1. 下载对应的压缩包
           2. 解压到目标目录
           3. 参考 README.md 或 使用教程.txt 开始使用
@@ -98,6 +118,7 @@ jobs:
           draft: false
           prerelease: false
           files: |
+            FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip
             fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip
             fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip
         env:
@@ -106,6 +127,6 @@ jobs:
       - name: Cleanup
         if: always()
         run: |
-          rm -rf release-files
+          rm -rf release-files apk-files
           rm -f release_notes.md
 
