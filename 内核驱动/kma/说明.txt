@@ -1,2 +1,0 @@
-libmemory.so是可以自己编译的，可以自己适配其他驱动
-源码地址: https://github.com/AYssu/libscan
