@@ -1,10 +1,10 @@
-# FastScan v2.2.1
+# FastScan v2.2.2
 
 <div align="center">
 
 **高性能指针链扫描与对比工具**
 
-[![Version](https://img.shields.io/badge/version-2.2.1-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-2.2.2-blue.svg)](#)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Android-green.svg)](#)
 [![Architecture](https://img.shields.io/badge/arch-x64%20%7C%20ARM64-orange.svg)](#)
 
@@ -901,6 +901,16 @@ cp ~/backup/com.example.game.bin /sdcard/fscan/config/
 
 ## 📝 更新日志
 
+### v2.2.2 (2025-11-12)
+
+**优化改进:**
+- ⚡ 优化 Android 9 雷电模拟器使用悬浮窗时的回车交互体验
+- ⚡ 优化文本载入性能与稳定性
+- ⚡ 优化内核扫描在指针数量过大时的内存管理，避免崩溃
+
+**Bug修复:**
+- 🐛 修复负指针扫描最后一级无法进行负向扫描的问题
+
 ### v2.2.1 (2025-11-08)
 
 **新功能:**
@@ -927,7 +937,7 @@ cp ~/backup/com.example.game.bin /sdcard/fscan/config/
 
 <div align="center">
 
-**FastScan v2.1.0 - 专业的指针链扫描工具**
+**FastScan v2.2.2 - 专业的指针链扫描工具**
 
 Made with ❤️ by 阿夜
 
