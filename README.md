@@ -1,10 +1,10 @@
-# FastScan v2.2.3
+# FastScan v2.2.4
 
 <div align="center">
 
 **高性能指针链扫描与对比工具**
 
-[![Version](https://img.shields.io/badge/version-2.2.2-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-2.2.4-blue.svg)](#)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Android-green.svg)](#)
 [![Architecture](https://img.shields.io/badge/arch-x64%20%7C%20ARM64-orange.svg)](#)
 
@@ -901,6 +901,20 @@ cp ~/backup/com.example.game.bin /sdcard/fscan/config/
 
 ## 📝 更新日志
 
+### v2.2.4 (2025-11-28)
+
+**新功能:**
+- ✨ 支持隐藏终端悬浮窗底部操作栏
+- ✨ 新增独立悬浮窗小键盘(妈妈再也不担心档视野了)
+
+
+**优化改进:**
+- ⚡ 优化libSea3驱动版本,更新到最新版本
+- ⚡ 优化部分菜单显示内容中描述信息
+
+**Bug修复:**
+- 🐛 本次无bug
+
 ### v2.2.3 (2025-11-14)
 
 **新功能:**
@@ -952,7 +966,7 @@ cp ~/backup/com.example.game.bin /sdcard/fscan/config/
 
 <div align="center">
 
-**FastScan v2.2.2 - 专业的指针链扫描工具**
+**FastScan v2.2.4 - 专业的指针链扫描工具**
 
 Made with ❤️ by 阿夜
 
