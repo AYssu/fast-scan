@@ -1,3 +1,0 @@
-预发行的kpm模块，包括fscan对接动态库和内核gg动态库，如果你不清楚这是什么可以直接跳过
-
-只支持apatch/sukisu 支持kernelpatch就能用
