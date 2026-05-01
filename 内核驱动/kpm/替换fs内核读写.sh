@@ -1,0 +1,1 @@
+cp -r libmemory.so /data/local/tmp/libmemory.so
