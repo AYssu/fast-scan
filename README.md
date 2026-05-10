@@ -1,10 +1,10 @@
-# FastScan v2.2.8
+# FastScan v2.2.9
 
 <div align="center">
 
 **高性能指针链扫描与对比工具**
 
-[![Version](https://img.shields.io/badge/version-2.2.8-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-2.2.9-blue.svg)](#)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Android-green.svg)](#)
 [![Architecture](https://img.shields.io/badge/arch-x64%20%7C%20ARM64-orange.svg)](#)
 
@@ -900,6 +900,19 @@ cp ~/backup/com.example.game.bin /sdcard/fscan/config/
 ---
 
 ## 📝 更新日志
+
+### v2.2.9 (2026-5-10)
+
+**优化改进:**
+- ⚡ 优化二进制过滤新增不加载
+- ⚡ 优化普通对比 和单线程对比
+- ⚡ 优化进程监听不切换包名
+
+- ⚡ 新增二进制过滤支持模糊
+- ⚡ 新增文本过滤支持模糊
+- ⚡ 新增全量对比
+
+
 ### v2.2.8 (2026-5-01)
 
 **优化改进:**
@@ -1004,7 +1017,7 @@ cp ~/backup/com.example.game.bin /sdcard/fscan/config/
 
 <div align="center">
 
-**FastScan v2.2.8 - 专业的指针链扫描工具**
+**FastScan v2.2.9 - 专业的指针链扫描工具**
 
 Made with ❤️ by 阿夜
 
