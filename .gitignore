@@ -8,3 +8,7 @@ ndk/obj
 ndk/libs
 /FastScan*.zip
 /v1
+# Local release outputs and Python caches
+/build/
+__pycache__/
+*.pyc

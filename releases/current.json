@@ -1,0 +1,180 @@
+{
+  "version": "3.0.2",
+  "release_date": "2026-10-11",
+  "apk": "FastScan-V3.0.2.apk",
+  "manual": "FastScan-Next-使用手册.md",
+  "notes": "releases/3.0.2.md",
+  "source_archive": {
+    "name": "FastScan-Next-V3.0.2.zip",
+    "sha256": "c6f795cf7ae02aedfe97fe939c4979b7976720fd3a7a68ca189257d630498727",
+    "modified_files": [
+      "注意事项.txt"
+    ],
+    "added_files": [
+      "动态基址模板/cpp模板/README.md",
+      "动态基址模板/cpp模板/driver/driver_base.h",
+      "动态基址模板/cpp模板/driver/driver_pread.h",
+      "动态基址模板/cpp模板/driver/driver_syscall.h",
+      "动态基址模板/cpp模板/include/smemory.h",
+      "动态基址模板/cpp模板/jni/Android.mk",
+      "动态基址模板/cpp模板/jni/Application.mk",
+      "动态基址模板/cpp模板/lib/arm64-v8a/libSea3.a",
+      "动态基址模板/cpp模板/lib/x86-64/libSea3.a",
+      "动态基址模板/cpp模板/lib/x86_64/libSea3.a",
+      "动态基址模板/cpp模板/memory.cpp",
+      "动态基址模板/cpp模板/一键构建脚本.sh",
+      "动态基址模板/lua模板/fscan基址模板.lua",
+      "动态基址模板/下载配套Akode C++IDE提供内存模块.txt"
+    ]
+  },
+  "directories": [
+    "内核驱动/",
+    "内核驱动/kpm/",
+    "内核驱动/rt/",
+    "内核驱动/其他驱动，自己编译噢/",
+    "动态基址模板/",
+    "动态基址模板/cpp模板/",
+    "动态基址模板/cpp模板/driver/",
+    "动态基址模板/cpp模板/include/",
+    "动态基址模板/cpp模板/jni/",
+    "动态基址模板/cpp模板/lib/",
+    "动态基址模板/cpp模板/lib/arm64-v8a/",
+    "动态基址模板/cpp模板/lib/x86-64/",
+    "动态基址模板/cpp模板/lib/x86_64/",
+    "动态基址模板/lua模板/"
+  ],
+  "files": [
+    {
+      "source": "FastScan-Next-使用手册.md",
+      "archive_path": "FastScan-Next-使用手册.md",
+      "size": 55587,
+      "sha256": "1343898642e918e3b6f456fa9ff9975554876a8fd116e17c64ed46bfa12ef5e0"
+    },
+    {
+      "source": "扫描软件/FastScan-V3.0.2.apk",
+      "archive_path": "FastScan-V3.0.2.apk",
+      "size": 31739167,
+      "sha256": "9f5ba4b80c8dc7815f2a04853efbda3e72fb7d76c1926171005e8866d4eecbdb"
+    },
+    {
+      "source": "内核驱动/kpm/fscan-prctl.kpm",
+      "archive_path": "内核驱动/kpm/fscan-prctl.kpm",
+      "size": 11168,
+      "sha256": "65c58e2266ea0c7f755705887b3e446b8d0d69555eb572967480239dd284fe1e"
+    },
+    {
+      "source": "内核驱动/kpm/libkpm.so",
+      "archive_path": "内核驱动/kpm/libkpm.so",
+      "size": 6288,
+      "sha256": "4a12fb44218d5cfcc9f92c86fb6ba8753721d252013ed2b657f55bbbbf3a04f6"
+    },
+    {
+      "source": "内核驱动/kpm/注意kpm不一定适配全机型",
+      "archive_path": "内核驱动/kpm/注意kpm不一定适配全机型",
+      "size": 72,
+      "sha256": "ba8bbf5cfefec1332294945eb2c3f0d35049e1ef08e78d215c61f30f43b1019f"
+    },
+    {
+      "source": "内核驱动/rt/RThook.zip",
+      "archive_path": "内核驱动/rt/RThook.zip",
+      "size": 5223864,
+      "sha256": "c50a2b883b4e861810b538f661be47e224dfdc5e4b689a07edf5e3367a786348"
+    },
+    {
+      "source": "内核驱动/rt/librthookpro.so",
+      "archive_path": "内核驱动/rt/librthookpro.so",
+      "size": 897160,
+      "sha256": "c0d4fc2757a93dd20344ee68630910e7ad0d7cea526683fba65abe2b6b86a53e"
+    },
+    {
+      "source": "注意事项.txt",
+      "archive_path": "注意事项.txt",
+      "size": 1796,
+      "sha256": "98d3f36e899b714edb6f833816234bf906a9405c0b6111d4e29658cd16fc40be"
+    },
+    {
+      "source": "动态基址模板/cpp模板/README.md",
+      "archive_path": "动态基址模板/cpp模板/README.md",
+      "size": 10349,
+      "sha256": "eaa12df6a6b84d405806a53d7ae133a1445c3e3a3de3e229ca7d83e5e4c70f02"
+    },
+    {
+      "source": "动态基址模板/cpp模板/driver/driver_base.h",
+      "archive_path": "动态基址模板/cpp模板/driver/driver_base.h",
+      "size": 1116,
+      "sha256": "d1d28a90cd8a72fe4fb12b85a354ce31991689d048c6a5ba56ef34ce71361639"
+    },
+    {
+      "source": "动态基址模板/cpp模板/driver/driver_pread.h",
+      "archive_path": "动态基址模板/cpp模板/driver/driver_pread.h",
+      "size": 2312,
+      "sha256": "b4ef5c9f45ba63a6642035d84ad8cad82d75ad3125e4487fa86d0af1e8abeca3"
+    },
+    {
+      "source": "动态基址模板/cpp模板/driver/driver_syscall.h",
+      "archive_path": "动态基址模板/cpp模板/driver/driver_syscall.h",
+      "size": 2211,
+      "sha256": "2fc65e9e6b746db053b73be6ad2e27e6cd88b7d3efe4f6acd126b42e3d7b199a"
+    },
+    {
+      "source": "动态基址模板/cpp模板/include/smemory.h",
+      "archive_path": "动态基址模板/cpp模板/include/smemory.h",
+      "size": 3944,
+      "sha256": "f9830feaddba47f3205fa17eec8b7c8a462996d792f90c6017b007144e4130fa"
+    },
+    {
+      "source": "动态基址模板/cpp模板/jni/Android.mk",
+      "archive_path": "动态基址模板/cpp模板/jni/Android.mk",
+      "size": 876,
+      "sha256": "a6ebf3e730cc40306e8896f9152e2050e92de591ecd2f1399ce676637586bd0b"
+    },
+    {
+      "source": "动态基址模板/cpp模板/jni/Application.mk",
+      "archive_path": "动态基址模板/cpp模板/jni/Application.mk",
+      "size": 77,
+      "sha256": "c74acf61d3dc79fc9c4e9b6faed9d914ef9a46ec166bf39a733388cbe10143f0"
+    },
+    {
+      "source": "动态基址模板/cpp模板/lib/arm64-v8a/libSea3.a",
+      "archive_path": "动态基址模板/cpp模板/lib/arm64-v8a/libSea3.a",
+      "size": 17714844,
+      "sha256": "105a277caf823567c259bdc8f428fc84aa47ab97ff8a9bc022297737914c4e1e"
+    },
+    {
+      "source": "动态基址模板/cpp模板/lib/x86-64/libSea3.a",
+      "archive_path": "动态基址模板/cpp模板/lib/x86-64/libSea3.a",
+      "size": 17401946,
+      "sha256": "74cd9d3d48d6513c632f4a0c732174942dcaac3a5eebcf04ad1a5a08767e0d44"
+    },
+    {
+      "source": "动态基址模板/cpp模板/lib/x86_64/libSea3.a",
+      "archive_path": "动态基址模板/cpp模板/lib/x86_64/libSea3.a",
+      "size": 19321216,
+      "sha256": "f2421e8abd632ab46ddaa4f7fbc24d9fd4c4a5bed0534cfcdb175eddba23fd56"
+    },
+    {
+      "source": "动态基址模板/cpp模板/memory.cpp",
+      "archive_path": "动态基址模板/cpp模板/memory.cpp",
+      "size": 2438,
+      "sha256": "30b52743f63878606b90ea0c5a84694a7541c82b622595fbb8c50aa9294e982e"
+    },
+    {
+      "source": "动态基址模板/cpp模板/一键构建脚本.sh",
+      "archive_path": "动态基址模板/cpp模板/一键构建脚本.sh",
+      "size": 580,
+      "sha256": "c85ecb8a31929fdae3084728d76bd4936d7c704dd70b4172b839faba6d2bd87c"
+    },
+    {
+      "source": "动态基址模板/lua模板/fscan基址模板.lua",
+      "archive_path": "动态基址模板/lua模板/fscan基址模板.lua",
+      "size": 6032,
+      "sha256": "6dbd9f1b5765e8361c33d0c6efc0017a28cc6319dcc1b699491fbd6d377ed33e"
+    },
+    {
+      "source": "动态基址模板/下载配套Akode C++IDE提供内存模块.txt",
+      "archive_path": "动态基址模板/下载配套Akode C++IDE提供内存模块.txt",
+      "size": 10,
+      "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
+    }
+  ]
+}

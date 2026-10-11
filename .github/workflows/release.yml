@@ -2,131 +2,84 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*'  # 当推送 v 开头的 tag 时触发，如 v1.0.0, v2.1.0
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '已存在的正式版标签，例如 v3.0.2（必须与清单版本一致）'
+        required: true
+        type: string
 
 permissions:
-  contents: write  # 允许创建 release 和上传文件
+  contents: read
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  build-and-release:
+  validate:
+    name: Validate release files and packaging
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 10
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取所有历史记录和标签
-      
-      - name: Get tag name
-        id: tag
-        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-      
-      - name: Create source archive
-        run: |
-          # 创建源码压缩包（包含所有文件）
-          zip -r fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip . \
-            -x "*.git*" \
-            -x "*node_modules*" \
-            -x "*.github*"
-          
-          # 提取 APK 文件（单独打包）
-          mkdir -p apk-files
-          find . -name "*.apk" -exec cp {} apk-files/ \;
-          
-          # 如果找到 APK 文件，则打包
-          if [ -n "$(ls -A apk-files)" ]; then
-            cd apk-files
-            zip -r ../FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip *.apk
-            cd ..
-          fi
-          
-          # 创建文档和脚本包（不包含 APK）
-          mkdir -p release-files
-          
-          # 复制主要文档和脚本
-          cp README.md release-files/ 2>/dev/null || true
-          cp 使用教程.txt release-files/ 2>/dev/null || true
-          
-          # 复制动态基址模板
-          if [ -d "动态基址模板" ]; then
-            cp -r "动态基址模板" release-files/
-          fi
-          
-          # 复制扫描软件（但排除 APK 文件）
-          if [ -d "扫描软件" ]; then
-            mkdir -p release-files/扫描软件
-            rsync -av --exclude='*.apk' "扫描软件/" "release-files/扫描软件/" 2>/dev/null || \
-            find "扫描软件" -type f ! -name "*.apk" -exec cp --parents {} release-files/ \; 2>/dev/null || true
-          fi
-          
-          # 复制lua集成C扫
-          if [ -d "lua集成C扫" ]; then
-            cp -r "lua集成C扫" release-files/
-          fi
-          
-          # 打包文档和工具
-          cd release-files
-          zip -r ../fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip .
-          cd ..
-      
-      - name: Generate Release Notes
-        id: release_notes
-        run: |
-          cat > release_notes.md << 'EOF'
-          ## FastScan ${{ steps.tag.outputs.TAG_NAME }}
-          
-          ### 📦 下载说明
-          
-          - **FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip**: APK 安装包（推荐下载）
-          - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip**: 完整源码包
-          - **fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip**: 工具和文档包（包含扫描软件、动态基址模板等，不含APK）
-          
-          ### 🚀 快速开始
-          
-          #### 方式一：直接使用 APK（推荐）
-          1. 下载 **FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip**
-          2. 解压并安装 APK 到手机
-          3. 开始使用
-          
-          #### 方式二：使用源码
-          1. 下载对应的压缩包
-          2. 解压到目标目录
-          3. 参考 README.md 或 使用教程.txt 开始使用
-          
-          ### ⚠️ 使用须知
-          
-          - 需要 Root 权限运行
-          - 支持真机64位、虚拟机64位、模拟器64位
-          - 详细使用说明请查看文档
-          
-          ### 📝 更新内容
-          
-          请查看提交记录了解详细更新内容。
-          EOF
-          
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
-          cat release_notes.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-      
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.tag.outputs.TAG_NAME }}
-          name: FastScan ${{ steps.tag.outputs.TAG_NAME }}
-          body_path: release_notes.md
-          draft: false
-          prerelease: false
-          files: |
-            FastScan-${{ steps.tag.outputs.TAG_NAME }}-apk.zip
-            fast-scan-${{ steps.tag.outputs.TAG_NAME }}-source.zip
-            fast-scan-${{ steps.tag.outputs.TAG_NAME }}-tools.zip
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          persist-credentials: false
+      - name: Test packager
+        run: python3 -m unittest discover -s tests -v
+      - name: Validate version and package
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Cleanup
-        if: always()
+          RELEASE_TAG: ${{ github.event.inputs.tag || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || '' }}
         run: |
-          rm -rf release-files apk-files
-          rm -f release_notes.md
+          if [ -z "$RELEASE_TAG" ]; then
+            RELEASE_TAG="$(python3 -c 'import json; print("v" + json.load(open("releases/current.json"))["version"])')"
+          fi
+          python3 scripts/package_release.py --tag "$RELEASE_TAG"
+          cd build/release
+          sha256sum -c SHA256SUMS
 
+  publish:
+    name: Publish stable GitHub Release
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+          persist-credentials: false
+      - name: Prepare verified release assets
+        run: |
+          python3 scripts/package_release.py --tag "$RELEASE_TAG"
+          cd build/release
+          sha256sum -c SHA256SUMS
+      - name: Publish release (never replace an existing release)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "::error::Release $RELEASE_TAG already exists; refusing to overwrite published assets."
+            exit 1
+          fi
+          # --verify-tag prevents silently creating a tag on an unrelated commit.
+          # GitHub CLI publishes stable releases unless --prerelease is requested.
+          gh release create "$RELEASE_TAG" \
+            --verify-tag \
+            --title "FastScan Next ${RELEASE_TAG#v}" \
+            --notes-file build/release/RELEASE_NOTES.md \
+            --latest \
+            build/release/*.zip \
+            build/release/*.apk \
+            build/release/FastScan-Next-使用手册.md \
+            build/release/SHA256SUMS
