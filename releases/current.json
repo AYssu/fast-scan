@@ -176,5 +176,6 @@
       "size": 10,
       "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
     }
-  ]
+  ],
+  "manual_asset": "FastScan-Next-Manual.md"
 }

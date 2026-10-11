@@ -81,5 +81,5 @@ jobs:
             --latest \
             build/release/*.zip \
             build/release/*.apk \
-            build/release/FastScan-Next-使用手册.md \
+            build/release/FastScan-Next-Manual.md \
             build/release/SHA256SUMS

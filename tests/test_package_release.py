@@ -28,6 +28,7 @@ class PackageReleaseTests(unittest.TestCase):
         self.manifest = {
             'version': '3.0.2', 'release_date': '2026-10-11',
             'apk': 'FastScan-V3.0.2.apk', 'manual': 'FastScan-Next-使用手册.md',
+            'manual_asset': 'FastScan-Next-Manual.md',
             'notes': 'releases/3.0.2.md',
             'source_archive': {'name': 'FastScan-Next-V3.0.2.zip', 'sha256': 'a' * 64},
             'directories': ['内核驱动/', '内核驱动/kpm/', '内核驱动/空目录/'],
@@ -59,7 +60,7 @@ class PackageReleaseTests(unittest.TestCase):
         assets = release.package(self.root, 'v3.0.2', self.output)
         self.assertEqual({p.name for p in assets}, {
             'FastScan-Next-V3.0.2.zip', 'FastScan-V3.0.2.apk',
-            'FastScan-Next-使用手册.md', 'SHA256SUMS', 'RELEASE_NOTES.md',
+            'FastScan-Next-Manual.md', 'SHA256SUMS', 'RELEASE_NOTES.md',
         })
         with zipfile.ZipFile(self.output / 'FastScan-Next-V3.0.2.zip') as archive:
             self.assertEqual(set(archive.namelist()), set(self.manifest['directories']) | {
@@ -71,6 +72,25 @@ class PackageReleaseTests(unittest.TestCase):
             digest, name = line.split('  ', 1)
             self.assertEqual(digest, release.sha256(self.output / name))
         self.assertIn('正式版', (self.output / 'RELEASE_NOTES.md').read_text())
+
+    def test_standalone_manual_name_is_ascii_and_preserves_content(self):
+        release.package(self.root, 'v3.0.2', self.output)
+        manual = self.output / self.manifest['manual_asset']
+        self.assertTrue(manual.name.isascii())
+        self.assertEqual(manual.read_bytes(), (self.root / self.manifest['manual']).read_bytes())
+        with zipfile.ZipFile(self.output / 'FastScan-Next-V3.0.2.zip') as archive:
+            self.assertEqual(archive.read(self.manifest['manual']), manual.read_bytes())
+        checksums = (self.output / 'SHA256SUMS').read_text()
+        self.assertIn('  ' + manual.name + '\n', checksums)
+        self.assertNotIn(self.manifest['manual'], checksums)
+        notes = (self.output / 'RELEASE_NOTES.md').read_text()
+        self.assertIn(manual.name, notes)
+
+    def test_rejects_unsafe_standalone_manual_name(self):
+        for name in ('FastScan-Next-使用手册.md', '../Manual.md', 'other.md'):
+            with self.subTest(name=name):
+                self.manifest['manual_asset'] = name
+                self.rejected('GitHub-safe filename')
 
     def test_packaging_includes_nested_templates_and_libraries(self):
         content = {

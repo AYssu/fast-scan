@@ -14,7 +14,7 @@
 | --- | --- |
 | `FastScan-Next-V3.0.2.zip` | 完整包：APK、离线手册、可选内核驱动、动态基址模板和 V3 使用注意事项。推荐下载。 |
 | `FastScan-V3.0.2.apk` | 仅安装应用；已有手册或无需配套驱动时选择。 |
-| `FastScan-Next-使用手册.md` | 独立使用手册，包含 MCP 连接及权限说明。 |
+| `FastScan-Next-Manual.md` | 独立使用手册（中文），包含 MCP 连接及权限说明。 |
 | `SHA256SUMS` | 下载文件的 SHA-256 校验值。 |
 
 解压完整包，安装 `FastScan-V3.0.2.apk`。驱动按需使用，不需要把驱动文件复制进 APK。

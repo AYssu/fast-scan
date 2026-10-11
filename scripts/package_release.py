@@ -63,6 +63,8 @@ def validate(root: Path, tag: str) -> dict:
     if manifest['apk'] != f'FastScan-V{version}.apk':
         raise ReleaseError('APK filename must match the release version')
     safe_relative(manifest['manual'])
+    if manifest.get('manual_asset') != 'FastScan-Next-Manual.md':
+        raise ReleaseError('Standalone manual must use the GitHub-safe filename FastScan-Next-Manual.md')
     if manifest['notes'] != f'releases/{version}.md':
         raise ReleaseError('Release notes must match the release version')
     provenance = manifest['source_archive']
@@ -115,7 +117,7 @@ def release_notes(root: Path, manifest: dict) -> str:
 
 - **FastScan-Next-V{version}.zip**：完整包，包含 APK、离线手册、配套驱动、动态基址模板及 V3 使用注意事项。
 - **{manifest['apk']}**：单独的 Android 安装包。
-- **{manifest['manual']}**：离线使用手册，包含 MCP 连接与权限说明。
+- **{manifest['manual_asset']}**：离线使用手册，包含 MCP 连接与权限说明。
 - **SHA256SUMS**：上述下载文件的 SHA-256 校验值。
 
 这是正式版发布。GitHub 自动附带的 Source code 压缩包只是本分发仓库的快照，不是应用安装包，也不包含完整 Android/核心源码。
@@ -166,9 +168,12 @@ def package(root: Path, tag: str, output: Path) -> list[Path]:
                     raise ReleaseError(f'Packaged file mismatch: {entry["archive_path"]}')
         for name in (manifest['apk'], manifest['manual']):
             entry = next(e for e in manifest['files'] if e['archive_path'] == name)
-            shutil.copyfile(source_file(root, entry['source']), stage / name)
-            if sha256(stage / name) != entry['sha256']:
-                raise ReleaseError(f'Standalone asset mismatch: {name}')
+            # GitHub rewrites non-ASCII release asset names. Keep the Chinese
+            # name inside the ZIP and use a stable ASCII name for direct downloads.
+            asset_name = manifest['manual_asset'] if name == manifest['manual'] else name
+            shutil.copyfile(source_file(root, entry['source']), stage / asset_name)
+            if sha256(stage / asset_name) != entry['sha256']:
+                raise ReleaseError(f'Standalone asset mismatch: {asset_name}')
         assets = sorted(stage.iterdir())
         (stage / 'SHA256SUMS').write_text(''.join(f'{sha256(p)}  {p.name}\n' for p in assets), encoding='utf-8')
         (stage / 'RELEASE_NOTES.md').write_text(release_notes(root, manifest), encoding='utf-8')
