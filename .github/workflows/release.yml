@@ -64,22 +64,12 @@ jobs:
           python3 scripts/package_release.py --tag "$RELEASE_TAG"
           cd build/release
           sha256sum -c SHA256SUMS
-      - name: Publish release (never replace an existing release)
-        shell: bash
-        run: |
-          set -euo pipefail
-          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
-            echo "::error::Release $RELEASE_TAG already exists; refusing to overwrite published assets."
-            exit 1
-          fi
-          # --verify-tag prevents silently creating a tag on an unrelated commit.
-          # GitHub CLI publishes stable releases unless --prerelease is requested.
-          gh release create "$RELEASE_TAG" \
-            --verify-tag \
-            --title "FastScan Next ${RELEASE_TAG#v}" \
-            --notes-file build/release/RELEASE_NOTES.md \
-            --latest \
-            build/release/*.zip \
-            build/release/*.apk \
-            build/release/FastScan-Next-Manual.md \
-            build/release/SHA256SUMS
+      # Use the publisher from this workflow revision, including when dispatching
+      # an older release tag that predates the idempotent publisher.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: release-tools
+          persist-credentials: false
+      - name: Publish release or verify identical existing assets
+        run: python3 release-tools/scripts/publish_release.py --tag "$RELEASE_TAG" --assets build/release
