@@ -85,7 +85,10 @@ def validate(root: Path, tag: str) -> dict:
             raise ReleaseError(f'Size mismatch: {entry["source"]}')
         if not re.fullmatch(r'[a-f0-9]{64}', entry['sha256']) or sha256(path) != entry['sha256']:
             raise ReleaseError(f'SHA-256 mismatch: {entry["source"]}')
-    if {name for name in names if name.endswith('.apk')} != {manifest['apk'].casefold()}:
+    expected_apks = {manifest['apk'].casefold()}
+    if manifest.get('test_apk'):
+        expected_apks.add(str(safe_relative(manifest['test_apk'])).casefold())
+    if {name for name in names if name.endswith('.apk')} != expected_apks:
         raise ReleaseError('Exactly the current APK must be included')
     if manifest['manual'].casefold() not in names:
         raise ReleaseError('The current manual must be included')

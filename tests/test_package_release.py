@@ -46,6 +46,21 @@ class PackageReleaseTests(unittest.TestCase):
         (self.root / 'releases/3.0.2.md').write_text('# FastScan 3.0.2 更新日志\n', encoding='utf-8')
         self.save()
 
+    def test_optional_test_apk_is_included_and_checked(self):
+        name = '测试软件/Pointer-Chain-Test-1.5.apk'
+        data = b'pointer chain test fixture'
+        path = self.root / name
+        path.parent.mkdir()
+        path.write_bytes(data)
+        self.manifest['test_apk'] = name
+        self.manifest['directories'].append('测试软件/')
+        self.manifest['files'].append({'source': name, 'archive_path': name,
+            'size': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
+        self.save()
+        release.package(self.root, 'v3.0.2', self.output)
+        with zipfile.ZipFile(self.output / 'FastScan-Next-V3.0.2.zip') as archive:
+            self.assertEqual(archive.read(name), data)
+
     def save(self):
         (self.root / 'releases/current.json').write_text(json.dumps(self.manifest, ensure_ascii=False), encoding='utf-8')
 
