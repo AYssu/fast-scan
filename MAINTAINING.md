@@ -26,4 +26,4 @@ cd build/release && sha256sum -c SHA256SUMS
 
 独立手册附件使用 `FastScan-Next-Manual.md`，避免 GitHub 重写中文附件名导致校验清单与下载文件名不一致；ZIP 内仍保留 `FastScan-Next-使用手册.md`。
 
-3.0.3 当前处于审核阶段，先创建 GitHub Release 草稿。审核通过前不要推送版本标签或手动触发正式发布工作流。
+3.0.3 已审核通过。后续版本可先创建 GitHub Release 草稿，审核通过后再正式发布。
