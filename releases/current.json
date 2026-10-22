@@ -1,31 +1,16 @@
 {
-  "version": "3.0.2",
-  "release_date": "2026-10-11",
-  "apk": "FastScan-V3.0.2.apk",
+  "version": "3.0.3",
+  "release_date": "2026-10-22",
+  "apk": "FastScan-V3.0.3.apk",
   "manual": "FastScan-Next-使用手册.md",
-  "notes": "releases/3.0.2.md",
+  "notes": "releases/3.0.3.md",
   "source_archive": {
-    "name": "FastScan-Next-V3.0.2.zip",
-    "sha256": "c6f795cf7ae02aedfe97fe939c4979b7976720fd3a7a68ca189257d630498727",
+    "name": "FastScan-Next-V3.0.3.zip",
+    "sha256": "a0866b6c09f3cd79b060223d035f9395f122344b09f2e29e55b7cc95a618284a",
     "modified_files": [
       "注意事项.txt"
     ],
-    "added_files": [
-      "动态基址模板/cpp模板/README.md",
-      "动态基址模板/cpp模板/driver/driver_base.h",
-      "动态基址模板/cpp模板/driver/driver_pread.h",
-      "动态基址模板/cpp模板/driver/driver_syscall.h",
-      "动态基址模板/cpp模板/include/smemory.h",
-      "动态基址模板/cpp模板/jni/Android.mk",
-      "动态基址模板/cpp模板/jni/Application.mk",
-      "动态基址模板/cpp模板/lib/arm64-v8a/libSea3.a",
-      "动态基址模板/cpp模板/lib/x86-64/libSea3.a",
-      "动态基址模板/cpp模板/lib/x86_64/libSea3.a",
-      "动态基址模板/cpp模板/memory.cpp",
-      "动态基址模板/cpp模板/一键构建脚本.sh",
-      "动态基址模板/lua模板/fscan基址模板.lua",
-      "动态基址模板/下载配套Akode C++IDE提供内存模块.txt"
-    ]
+    "added_files": []
   },
   "directories": [
     "内核驱动/",
@@ -48,13 +33,13 @@
       "source": "FastScan-Next-使用手册.md",
       "archive_path": "FastScan-Next-使用手册.md",
       "size": 55587,
-      "sha256": "1343898642e918e3b6f456fa9ff9975554876a8fd116e17c64ed46bfa12ef5e0"
+      "sha256": "6b2431e9b2d9593842dce3619443882c5846289bf786df9de6dd8be31f5932fa"
     },
     {
-      "source": "扫描软件/FastScan-V3.0.2.apk",
-      "archive_path": "FastScan-V3.0.2.apk",
-      "size": 31739167,
-      "sha256": "9f5ba4b80c8dc7815f2a04853efbda3e72fb7d76c1926171005e8866d4eecbdb"
+      "source": "扫描软件/FastScan-V3.0.3.apk",
+      "archive_path": "FastScan-V3.0.3.apk",
+      "size": 28291849,
+      "sha256": "42d535f5155dcde270497a85b6bf0932f0b9ab3bf92814cb1b5ac8cdbac62b3c"
     },
     {
       "source": "内核驱动/kpm/fscan-prctl.kpm",
@@ -89,8 +74,8 @@
     {
       "source": "注意事项.txt",
       "archive_path": "注意事项.txt",
-      "size": 1796,
-      "sha256": "98d3f36e899b714edb6f833816234bf906a9405c0b6111d4e29658cd16fc40be"
+      "size": 1829,
+      "sha256": "407b261693f6b66d05b0ea44bf1a6fc2ee6926536824f67e9dcc14af6f686ae6"
     },
     {
       "source": "动态基址模板/cpp模板/README.md",
@@ -175,6 +160,12 @@
       "archive_path": "动态基址模板/下载配套Akode C++IDE提供内存模块.txt",
       "size": 10,
       "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
+    },
+    {
+      "source": "releases/3.0.3.md",
+      "archive_path": "更新日志.md",
+      "size": 1354,
+      "sha256": "99ef571aa6b4dacebeedc4232335136a86d010967aa69606ab689011e1419660"
     }
   ],
   "manual_asset": "FastScan-Next-Manual.md"

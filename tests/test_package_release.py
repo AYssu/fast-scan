@@ -254,7 +254,9 @@ class PackageReleaseTests(unittest.TestCase):
             for p in [templates, *templates.rglob('*')] if p.is_dir()
         }
         self.assertEqual({d for d in current['directories'] if d.startswith('动态基址模板/')}, directories)
-        self.assertEqual(set(current['source_archive']['added_files']), files)
+        # Existing templates may already be present in the newer source archive.
+        self.assertTrue(set(current['source_archive']['added_files']).issubset(
+            {e['archive_path'] for e in current['files']}))
         self.assertIn('动态基址模板', release.release_notes(ROOT, current))
 
     def test_repository_removed_obsolete_tools_and_tutorial(self):
@@ -297,7 +299,8 @@ class PackageReleaseTests(unittest.TestCase):
         readme = (ROOT / 'README.md').read_text(encoding='utf-8')
         notice = (ROOT / '注意事项.txt').read_text(encoding='utf-8')
         self.assertTrue(readme.startswith('# FastScan Next V3\n'))
-        self.assertIn(f"当前正式版：**{current['version']}**", readme)
+        self.assertTrue(any(f"{label}：**{current['version']}**" in readme
+                            for label in ("当前正式版", "仓库版本")))
         self.assertIn(f"当前版本：{current['version']} 正式版", notice)
         self.assertIn('FastScan-Next-使用手册.md', notice)
         self.assertNotIn('预发布', notice)

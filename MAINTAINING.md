@@ -12,16 +12,18 @@
 
 ```bash
 python3 -m unittest discover -s tests -v
-python3 scripts/package_release.py --tag v3.0.2
+python3 scripts/package_release.py --tag v3.0.3
 cd build/release && sha256sum -c SHA256SUMS
 ```
 
-发布前更新 APK、手册、驱动、模板、更新日志及 `releases/current.json` 中的文件大小和 SHA-256。将这些改动提交并推送后，推送对应版本标签（如 `v3.0.2`）即可自动发布；也可以在 **Actions → Release → Run workflow** 填写已存在的版本标签。
+发布前更新 APK、手册、驱动、模板、更新日志及 `releases/current.json` 中的文件大小和 SHA-256。将这些改动提交并推送后，推送对应版本标签（如 `v3.0.3`）即可自动发布；也可以在 **Actions → Release → Run workflow** 填写已存在的版本标签。
 
 - 标签必须与清单版本一致；不接受任意分支作为手动发布目标。
 - 缺少文件、校验值不一致或版本不匹配时停止，不上传残缺包。
 - 只打包清单中的文件，包含完整动态基址模板，不混入历史 APK 或无关开发文件。
 - 默认创建正式版，不标记为预发布；重复标签不会静默覆盖已发布附件。
-- 发布文件以手机 V3.0.2 完整包为基础，补充仓库中的动态基址模板，`注意事项.txt` 已更新为 V3 正式版说明。发布前按当前清单核对文件内容；来源 ZIP 的校验值、修改项及新增文件列表保存在 `source_archive` 中，新发布包的校验值见 `SHA256SUMS`。
+- 3.0.3 发布文件已更新 APK、手册及更新日志，驱动与动态基址模板沿用 3.0.2；`注意事项.txt` 已更新为 V3 正式版说明。发布前按当前清单核对文件内容；来源 ZIP 的校验值、修改项及新增文件列表保存在 `source_archive` 中，新发布包的校验值见 `SHA256SUMS`。
 
 独立手册附件使用 `FastScan-Next-Manual.md`，避免 GitHub 重写中文附件名导致校验清单与下载文件名不一致；ZIP 内仍保留 `FastScan-Next-使用手册.md`。
+
+3.0.3 当前处于审核阶段，先创建 GitHub Release 草稿。审核通过前不要推送版本标签或手动触发正式发布工作流。
