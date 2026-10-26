@@ -1,19 +1,21 @@
 {
-  "version": "3.0.6",
-  "release_date": "2026-10-24",
-  "apk": "FastScan-V3.0.6.apk",
+  "version": "3.0.7",
+  "release_date": "2026-10-26",
+  "apk": "FastScan-V3.0.7.apk",
   "manual": "FastScan-Next-使用手册.md",
-  "notes": "releases/3.0.6.md",
+  "notes": "releases/3.0.7.md",
   "source_archive": {
-    "name": "FastScan-Next-V3.0.6.zip",
-    "sha256": "342f5de1bbc97e66b2a523a417df42dbc6edfb5f8615d8c45e4e77e484e70334",
+    "name": "FastScan-Next-V3.0.7.zip",
+    "sha256": "91fb562df4727f4901742fa7efa2cd854d5a03ea6f23811e093e6ff3c2f5b50b",
     "modified_files": [
-      "FastScan-V3.0.6.apk",
+      "FastScan-V3.0.7.apk",
       "FastScan-Next-使用手册.md",
       "更新日志.md",
       "注意事项.txt"
     ],
-    "added_files": []
+    "added_files": [
+      "测试软件/Pointer-Chain-Test-1.8.apk"
+    ]
   },
   "directories": [
     "内核驱动/",
@@ -36,14 +38,14 @@
     {
       "source": "FastScan-Next-使用手册.md",
       "archive_path": "FastScan-Next-使用手册.md",
-      "size": 58190,
-      "sha256": "02c8d1cc8be4262e55eea91f504b69c30c97eeb70b495ed97ad334cafb1ef385"
+      "size": 59229,
+      "sha256": "6755b33d9ed5705655bb20df064d5077ea25a61bd6a7f3898f8577c05c006b87"
     },
     {
-      "source": "扫描软件/FastScan-V3.0.6.apk",
-      "archive_path": "FastScan-V3.0.6.apk",
-      "size": 28336067,
-      "sha256": "994ced9366eadfa35cb0d5c2dac40e48253318237670f13ce54f8412a08faeef"
+      "source": "扫描软件/FastScan-V3.0.7.apk",
+      "archive_path": "FastScan-V3.0.7.apk",
+      "size": 29252671,
+      "sha256": "02004a994dff11b689d8a155dd678b768fb4b38bb777e0162e4b548020d86262"
     },
     {
       "source": "内核驱动/kpm/fscan-prctl.kpm",
@@ -79,7 +81,7 @@
       "source": "注意事项.txt",
       "archive_path": "注意事项.txt",
       "size": 1796,
-      "sha256": "78ec10096f5405202fc0318c91afb4ef93983c23b9a793aa20abd4d43725c545"
+      "sha256": "9ff863f226bd5de1a18d9757afaf9e5621356d79077ace6142594c837761a4e7"
     },
     {
       "source": "动态基址模板/cpp模板/README.md",
@@ -166,18 +168,18 @@
       "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
     },
     {
-      "source": "releases/3.0.6.md",
+      "source": "releases/3.0.7.md",
       "archive_path": "更新日志.md",
-      "size": 1244,
-      "sha256": "98f313775239a9161a37f05acbd12844f11b578caf0781af5f4dcf1ba4b369cc"
+      "size": 911,
+      "sha256": "43619f359059bb8874fc403f024cf20c25ae5343fb2dc4f134221d83b25ff496"
     },
     {
-      "source": "测试软件/Pointer-Chain-Test-1.7.apk",
-      "archive_path": "测试软件/Pointer-Chain-Test-1.7.apk",
-      "size": 2388936,
-      "sha256": "22c8852a223658a0078f967383575b1fffcd15dd6042d7b0ba61f05b4cdedc90"
+      "source": "测试软件/Pointer-Chain-Test-1.8.apk",
+      "archive_path": "测试软件/Pointer-Chain-Test-1.8.apk",
+      "size": 2427016,
+      "sha256": "2532cf31d325297da88a72633bd00c7dab92da3c03742eedb013f282c87ad43f"
     }
   ],
   "manual_asset": "FastScan-Next-Manual.md",
-  "test_apk": "测试软件/Pointer-Chain-Test-1.7.apk"
+  "test_apk": "测试软件/Pointer-Chain-Test-1.8.apk"
 }

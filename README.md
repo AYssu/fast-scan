@@ -1,6 +1,6 @@
 # FastScan Next V3
 
-当前正式版：**3.0.6**。
+当前正式版：**3.0.7**。
 
 **面向 Android 的指针链扫描、对比与验证工具，内置 MCP 服务。**
 
@@ -12,12 +12,12 @@
 
 | 文件 | 用途 |
 | --- | --- |
-| `FastScan-Next-V3.0.6.zip` | 完整包：FastScan APK、Pointer Chain Test 测试软件、离线手册、可选内核驱动、动态基址模板和 V3 使用注意事项。推荐下载。 |
-| `FastScan-V3.0.6.apk` | 仅安装应用；已有手册或无需配套驱动时选择。 |
+| `FastScan-Next-V3.0.7.zip` | 完整包：FastScan APK、Pointer Chain Test 测试软件、离线手册、可选内核驱动、动态基址模板和 V3 使用注意事项。推荐下载。 |
+| `FastScan-V3.0.7.apk` | 仅安装应用；已有手册或无需配套驱动时选择。 |
 | `FastScan-Next-Manual.md` | 独立使用手册（中文），包含 MCP 连接及权限说明。 |
 | `SHA256SUMS` | 下载文件的 SHA-256 校验值。 |
 
-解压完整包，安装 `FastScan-V3.0.6.apk`。驱动按需使用，不需要把驱动文件复制进 APK。
+解压完整包，安装 `FastScan-V3.0.7.apk`。驱动按需使用，不需要把驱动文件复制进 APK。
 
 > 请下载发布页面中的完整 ZIP 或 APK。GitHub 自动生成的 **Source code** 压缩包不是应用安装包。
 
@@ -70,8 +70,8 @@ MCP 已内置在 App 中，**无需另外安装服务程序**。
 ## 完整包内容
 
 ```text
-FastScan-Next-V3.0.6.zip
-├── FastScan-V3.0.6.apk          应用安装包
+FastScan-Next-V3.0.7.zip
+├── FastScan-V3.0.7.apk          应用安装包
 ├── FastScan-Next-使用手册.md    完整使用说明
 ├── 注意事项.txt                安装与使用提醒
 ├── 内核驱动/                  KPM、RT 等可选配套文件
@@ -86,4 +86,6 @@ FastScan-Next-V3.0.6.zip
 
 遇到问题时，请提供应用版本、设备型号、Android 版本、操作步骤及必要截图或日志；分享前请隐去账号、密码和 MCP 访问令牌。
 
-配套测试软件：`测试软件/Pointer-Chain-Test-1.7.apk`，包名 `com.ayssu.chainlab`。安装后可测试 APK 内加载、独立 SO 文件加载两组各 1～4 级 JNI 指针链，点击改变整数，长按复制地址、值或 Cd 链路。
+配套测试软件：`测试软件/Pointer-Chain-Test-1.8.apk`，包名 `com.ayssu.chainlab`。安装后可测试 APK 内加载、独立 SO 文件加载两组各 1～4 级 JNI 指针链，点击改变整数，长按复制地址、值或 Cd 链路。
+
+Pointer Chain Test 1.8 默认使用 32 GiB 稀疏虚拟空间，随机布置链条、不可读页面及约 3000 万条可读对象引用，用于大规模扫描测试。虚拟空间大小不等于实际内存占用；背景对象约占用 464 MiB，低内存设备请先关闭其他高负载任务。
