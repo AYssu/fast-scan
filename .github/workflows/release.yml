@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: '已存在的正式版标签，例如 v3.0.2（必须与清单版本一致）'
+        description: '已存在的正式版标签，例如 v3.0.8（必须与清单版本一致）'
         required: true
         type: string
 

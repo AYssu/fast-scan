@@ -289,7 +289,7 @@ class PackageReleaseTests(unittest.TestCase):
         ):
             with self.subTest(internal=internal):
                 self.assertNotIn(internal, readme)
-        for section in ('## 下载与安装', '## 快速开始', '## 完整包内容', '## 问题反馈'):
+        for section in ('## 下载安装', '## 开始使用', '## 配套测试与集成', '## 问题反馈'):
             self.assertIn(section, readme)
         maintenance = (ROOT / 'MAINTAINING.md').read_text(encoding='utf-8')
         self.assertIn('releases/current.json', maintenance)
@@ -309,14 +309,25 @@ class PackageReleaseTests(unittest.TestCase):
         self.assertIn(f'({version}.md)', index)
         self.assertTrue((ROOT / current['notes']).is_file())
 
+    def test_current_distribution_only_has_current_apks_and_libfs_sdk(self):
+        current = release.validate(ROOT, 'v' + json.loads((ROOT / 'releases/current.json').read_text())['version'])
+        self.assertEqual({p.name for p in (ROOT / '扫描软件').glob('*.apk')}, {current['apk']})
+        self.assertEqual({p.name for p in (ROOT / '测试软件').glob('*.apk')}, {Path(current['test_apk']).name})
+        template = ROOT / '动态基址模板/cpp模板'
+        self.assertEqual({p.relative_to(template).as_posix() for p in template.rglob('*.a')},
+                         {'lib/arm64-v8a/libfs.a', 'lib/x86_64/libfs.a'})
+        for header in ('libfs.h', 'libfs.hpp'):
+            self.assertTrue((template / 'include' / header).is_file())
+        self.assertIn('LOCAL_STATIC_LIBRARIES := fs', (template / 'jni/Android.mk').read_text())
+
     def test_repository_v3_documentation_is_consistent(self):
         current = json.loads((ROOT / 'releases/current.json').read_text(encoding='utf-8'))
         readme = (ROOT / 'README.md').read_text(encoding='utf-8')
         notice = (ROOT / '注意事项.txt').read_text(encoding='utf-8')
-        self.assertTrue(readme.startswith('# FastScan Next V3\n'))
+        self.assertIn('<h1 align="center">FastScan Next V3</h1>', readme)
         self.assertTrue(any(f"{label}：**{current['version']}**" in readme
                             for label in ("当前正式版", "仓库版本")))
-        self.assertIn(f"当前版本：{current['version']} 正式版", notice)
+        self.assertIn(f"当前版本：{current['version']}", notice)
         self.assertIn('FastScan-Next-使用手册.md', notice)
         self.assertNotIn('预发布', notice)
         self.assertNotIn('原包注意事项', release.release_notes(ROOT, current))

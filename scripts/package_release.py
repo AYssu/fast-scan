@@ -129,7 +129,7 @@ def release_notes(root: Path, manifest: dict) -> str:
 
 安装 APK 后配置账号、权限、目标进程及读取器。MCP 已内置在应用中，无需额外安装服务程序。
 配套内核驱动不保证全机型适配，跨进程访问需要相应权限。只在你有权操作的设备和应用上使用。
-完整包附带 C++ / Lua 动态基址模板及原有配套静态库；历史模板尚未验证与 V3 当前结果格式完全兼容，使用前请核对并按需适配。
+完整包附带 libfs C++ 模板、Android 两架构静态库与头文件，以及 Lua 示例。libfs 提供模块和读写，不解析 OUT/NORM；Lua 示例需按实际链路核对。
 安装与使用提醒已更新为 V3 正式版说明，详细流程见同包使用手册。
 
 '''+source_file(root, manifest['notes']).read_text(encoding='utf-8')
@@ -187,7 +187,7 @@ def package(root: Path, tag: str, output: Path) -> list[Path]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--tag', required=True, help='Existing stable version tag, e.g. v3.0.2')
+    parser.add_argument('--tag', required=True, help='Existing stable version tag, e.g. v3.0.8')
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--output', type=Path, help='Empty output directory (default: ROOT/build/release)')
     args = parser.parse_args()

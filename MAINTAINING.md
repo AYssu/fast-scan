@@ -12,11 +12,11 @@
 
 ```bash
 python3 -m unittest discover -s tests -v
-python3 scripts/package_release.py --tag v3.0.3
+python3 scripts/package_release.py --tag v3.0.8
 cd build/release && sha256sum -c SHA256SUMS
 ```
 
-发布前更新 APK、手册、驱动、模板、更新日志及 `releases/current.json` 中的文件大小和 SHA-256。将这些改动提交并推送后，推送对应版本标签（如 `v3.0.3`）即可自动发布；也可以在 **Actions → Release → Run workflow** 填写已存在的版本标签。
+发布前更新 APK、手册、驱动、模板、更新日志及 `releases/current.json` 中的文件大小和 SHA-256。将这些改动提交并推送后，推送对应版本标签（如 `v3.0.8`）即可自动发布；也可以在 **Actions → Release → Run workflow** 填写已存在的版本标签。
 
 - 标签必须与清单版本一致；不接受任意分支作为手动发布目标。
 - 缺少文件、校验值不一致或版本不匹配时停止，不上传残缺包。
@@ -35,3 +35,14 @@ cd build/release && sha256sum -c SHA256SUMS
 3.0.6 新增应用更新检查、公告、下载与系统安装流程，改进悬浮球及切换动画，并将关闭入口移至悬浮设置页；测试软件、驱动和动态基址模板沿用 3.0.5。
 
 3.0.7 更新扫描采集和终端进度、模块范围标签，对比与过滤默认匹配上限为 3000 万；完整包包含 Pointer Chain Test 1.8，增加大规模真实指针测试场景。驱动和模板沿用 3.0.6。
+
+3.0.8：更新 FastScan APK、Pointer Chain Test 1.9、使用手册，C++ 模板迁移为 libfs 0.1.0 两架构静态库。工作树仅保留当前 APK；旧 APK 从已发布 Releases 获取。驱动与 Lua 模板沿用现有文件。使用 v3.0.8 标签发布。source_archive 为本次输入文件的本地来源快照，不把旧版 ZIP 哈希冒充新版。
+
+## 当前 CI 与 3.0.8 核对
+
+- main 推送和 PR：运行打包/发布脚本单元测试、清单版本及输入文件校验、完整包生成与 SHA256SUMS 校验，不发布。
+- 版本标签推送：先通过同样检查，再发布该标签对应的稳定版本。手动运行也必须填写已存在且与清单一致的版本标签，例如 v3.0.8。
+- 发布任务从工作流版本读取 publish_release.py：已存在的正式版附件完全相同则通过；名称、大小、哈希不同或仍是草稿/预发布则停止。网络、权限错误不会当作不存在，更不会覆盖附件。
+- 校验和打包包含 FastScan 3.0.8、Pointer Chain Test 1.9、当前离线手册及 libfs 两架构静态库，不包含历史安装包和 libSea3。
+- 操作手册已同步当前导航、登录自动保存、通知铃铛/三天红点规则、主题及高级扫描选项。修改手册或附件后必须重新更新清单并打包。
+- 本地检查不代表 GitHub Actions 已运行；提交并推送后以对应工作流日志为准。只准备本地产物时不创建标签，也不将其称为正式发布。

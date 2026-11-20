@@ -12,3 +12,14 @@ ndk/libs
 /build/
 __pycache__/
 *.pyc
+
+# Local development previews, logs and analysis data
+/.code-review-graph/
+/preview/
+/previews/
+/README*.html
+/readme*.html
+*preview*.html
+*.log
+.DS_Store
+Thumbs.db
