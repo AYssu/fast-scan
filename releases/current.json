@@ -1,42 +1,20 @@
 {
-  "version": "3.0.8_1",
-  "release_date": "2026-11-21",
-  "apk": "FastScan-V3.0.8_1.apk",
+  "version": "3.0.9",
+  "release_date": "2026-11-22",
+  "apk": "FastScan-V3.0.9.apk",
   "manual": "FastScan-Next-使用手册.md",
-  "notes": "releases/3.0.8_1.md",
+  "notes": "releases/3.0.9.md",
   "source_archive": {
-    "name": "FastScan-Next-V3.0.8_1.zip",
-    "sha256": "ed0f55f6b3facd3316ffd53adcd04fe30ceb66b3862d5415ac0ba44e712160de",
-    "description": "3.0.8_1 经审核交付快照；来源在 release/v3.0.8_1/source",
+    "name": "FastScan-Next-V3.0.9.zip",
+    "sha256": "11bf2d4e6794494c895e7e250671699cc6c0ca0bcb74f1ce38b69463576a4a3b",
+    "description": "3.0.9 经审核交付输入快照；来源在 release/v3.0.9/source，扫描核心、libfs 和测试工具沿用现有配套产物",
     "modified_files": [
       "FastScan-Next-使用手册.md",
       "更新日志.md",
-      "内核驱动/kpm/fscan-prctl.kpm",
-      "内核驱动/kpm/libkpm.so",
-      "内核驱动/kpm/注意kpm不一定适配全机型",
-      "内核驱动/rt/RThook.zip",
-      "内核驱动/rt/librthookpro.so",
-      "动态基址模板/cpp模板/README.md",
-      "动态基址模板/cpp模板/include/libfs.h",
-      "动态基址模板/cpp模板/include/libfs.hpp",
-      "动态基址模板/cpp模板/jni/Android.mk",
-      "动态基址模板/cpp模板/jni/Application.mk",
-      "动态基址模板/cpp模板/lib/arm64-v8a/libfs.a",
-      "动态基址模板/cpp模板/lib/x86_64/libfs.a",
-      "动态基址模板/cpp模板/libfs-使用说明.md",
-      "动态基址模板/cpp模板/main.cpp",
-      "动态基址模板/cpp模板/一键构建脚本.sh",
-      "动态基址模板/lua模板/fscan基址模板.lua",
-      "动态基址模板/下载配套Akode C++IDE提供内存模块.txt",
-      "FastScan-V3.0.8_1.apk",
-      "注意事项.txt",
-      "测试软件/Pointer-Chain-Test-1.9.apk",
-      "动态基址模板/cpp模板/include/libfs_drivers.hpp"
+      "FastScan-V3.0.9.apk",
+      "注意事项.txt"
     ],
-    "added_files": [
-      "动态基址模板/cpp模板/main.cpp",
-      "动态基址模板/cpp模板/include/libfs_drivers.hpp"
-    ]
+    "added_files": []
   },
   "directories": [
     "内核驱动/",
@@ -56,14 +34,14 @@
     {
       "source": "FastScan-Next-使用手册.md",
       "archive_path": "FastScan-Next-使用手册.md",
-      "size": 62837,
-      "sha256": "2a2c76b5c124fc8f664d6ca7c2790dd32ef47f7931259d99175e593bd861950e"
+      "size": 66249,
+      "sha256": "e8b69420da6ebcf5b6c8e8b1c73faaae706d9139a0e979e35bc8765810dd824f"
     },
     {
-      "source": "releases/3.0.8_1.md",
+      "source": "releases/3.0.9.md",
       "archive_path": "更新日志.md",
-      "size": 1111,
-      "sha256": "09a156530d2e5749c345100dfd8b3eafb4190b840e0c8a9102c2ff148d30a559"
+      "size": 1230,
+      "sha256": "6e1b87eb17361f1ef0e1c98240474f317ce0e2fabb3e24b90a8420736d274061"
     },
     {
       "source": "内核驱动/kpm/fscan-prctl.kpm",
@@ -168,16 +146,16 @@
       "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
     },
     {
-      "source": "扫描软件/FastScan-V3.0.8_1.apk",
-      "archive_path": "FastScan-V3.0.8_1.apk",
-      "size": 21842377,
-      "sha256": "4480719f4e1d4167031321377f6a44ef7355f34a3ae190419934c0a15f12b2c4"
+      "source": "扫描软件/FastScan-V3.0.9.apk",
+      "archive_path": "FastScan-V3.0.9.apk",
+      "size": 21963785,
+      "sha256": "034c58df5b2a989a4d7ce335bf5e4ea43ffadcf8af658a817aab20e9f10e426a"
     },
     {
       "source": "注意事项.txt",
       "archive_path": "注意事项.txt",
-      "size": 1993,
-      "sha256": "3e323fcebe14f66a2e2cc1dab27c3263c7e7a8d6ad5c2ce7e5a99fc64ccfc030"
+      "size": 2260,
+      "sha256": "9e93cd82769d2d2e23674b8a771c0748bfab2a82bd1c51e12bce5924d51356d6"
     },
     {
       "source": "测试软件/Pointer-Chain-Test-1.9.apk",

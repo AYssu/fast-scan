@@ -4,7 +4,7 @@
 
 <h1 align="center">FastScan Next V3</h1>
 <p align="center"><strong>从定位地址，到验证稳定的指针链</strong></p>
-<p align="center">指针扫描 · 对比过滤 · 链路调试 · 悬浮操作 · MCP 服务</p>
+<p align="center">指针扫描 · 对比过滤 · 脚本生成 · 悬浮操作 · MCP 服务</p>
 
 <p align="center">
   <a href="https://github.com/AYssu/fast-scan/releases/latest"><img src="https://img.shields.io/github/v/release/AYssu/fast-scan?color=2563EB" alt="GitHub 最新正式版" /></a>
@@ -28,18 +28,18 @@ FastScan 是面向 Android 的指针链扫描与验证工具。选择目标进�
 
 这个仓库提供安装包、使用文档、指针测试工具及配套模板，不是完整 Android 应用与扫描核心的源码仓库。
 
-> 仓库版本：**3.0.8_1**（3.0.8 修复包；软件内部版本保持 3.0.8）。
+> 当前正式版：**3.0.9**。
 
 <br clear="right" />
 
 ## 下载安装
 
-前往 [Releases](https://github.com/AYssu/fast-scan/releases) 下载。以下是 3.0.8_1 的配套文件安排：
+前往 [Releases](https://github.com/AYssu/fast-scan/releases) 下载。以下是 3.0.9 的配套文件安排：
 
 | 文件 | 适合谁 | 包含什么 |
 | --- | --- | --- |
-| **FastScan-Next-V3.0.8_1.zip** | 首次使用，或需要配套工具 | FastScan APK、Pointer Chain Test、离线手册、可选驱动、libfs C++ 与 Lua 模板。 |
-| **FastScan-V3.0.8_1.apk** | 只需要安装或升级应用 | Android 安装包，支持 ARM64 与 x86_64。 |
+| **FastScan-Next-V3.0.9.zip** | 首次使用，或需要配套工具 | FastScan APK、Pointer Chain Test、离线手册、可选驱动、libfs C++ 与 Lua 模板。 |
+| **FastScan-V3.0.9.apk** | 只需要安装或升级应用 | Android 安装包，支持 ARM64 与 x86_64。 |
 | **FastScan-Next-Manual.md** | 希望离线查阅操作 | 使用流程、参数说明、MCP 连接与常见问题。 |
 | **SHA256SUMS** | 需要核对下载完整性 | 对应发布附件的 SHA-256 校验值。 |
 
@@ -71,6 +71,7 @@ GitHub 自动生成的 **Source code** 压缩包是本仓库快照。日常安�
 | **查找指针链** | 设置目标地址、层数与最大偏移，按内存范围采集、按模块筛选根节点；支持从文件导入地址。 |
 | **筛选稳定结果** | 对比多次扫描结果，再按当前地址过滤；匹配上限可配置，对比与过滤默认 3000 万条。 |
 | **核对链条** | 查看逐级跳转、最终地址和读取值，复制链路继续验证；支持为 start 链设置起始地址。 |
+| **输出脚本与程序** | 将 TXT 指针链生成 GG Lua、C++ 工程或可执行文件，支持选取前 1～1000 条及自定义文件名。 |
 | **整理结果文件** | 转换 OUT、TXT 等结果格式，便于后续对比、查看与调试。 |
 | **选择界面外观** | 设置中可选跟随系统、深色或浅色，自动保存，主窗口与悬浮窗同步。 |
 | **切换目标与读取器** | 在“进程与模块”集中选择进程、读取器、内存范围和模块，并运行读取器测试。 |
@@ -91,6 +92,18 @@ GitHub 自动生成的 **Source code** 压缩包是本仓库快照。日常安�
 
 完整操作见[使用手册](FastScan-Next-使用手册.md)，安装和权限提醒见[注意事项](注意事项.txt)。
 
+## 从指针链生成脚本与程序
+
+进入「工具 → 脚本与程序」，选择扫描导出的 **TXT**，填写目标包名、目标位数及生成条数（1～1000）。可获取地址或批量修改数值，GG Lua 还可选择冻结。
+
+- **GG Lua**：生成脚本，在 GameGuardian 中运行。
+- **C++ 工程**：导出 ZIP，包含代码、libfs 静态库和编译文件，便于继续修改或使用 NDK 编译。
+- **可执行文件**：选择 ARM64 或 x86_64，配置能在当前设备运行的 NDK，检测通过后生成；电脑 NDK 不能直接在 Android 上运行。
+
+生成前会检查 TXT 的全部非空行，每行都应包含模块和偏移；格式错误会提示行号。输出只需填写文件名，默认提供 `script.lua`、`project.zip` 或 `pointer-tool`，可自行修改，按原名保存在 TXT 同目录，不会覆盖已有文件。生成完成后可查看并复制完整路径。
+
+详细操作及输入示例见[使用手册](FastScan-Next-使用手册.md#脚本与程序生成)。
+
 ## 配套测试与集成
 
 ### Pointer Chain Test 1.9
@@ -106,7 +119,7 @@ GitHub 自动生成的 **Source code** 压缩包是本仓库快照。日常安�
 
 ### libfs 静态库与模板
 
-[C++ 模板](动态基址模板/cpp模板/README.md)使用 **libfs 0.1.0**，提供 Android `arm64-v8a` 与 `x86_64` 的 `libfs.a`、C / C++ 头文件及模块查询、整数读取示例。两架构示例已通过 NDK 构建与链接验证。
+[C++ 模板](动态基址模板/cpp模板/README.md)使用 **libfs 0.1.1**，提供 Android `arm64-v8a` 与 `x86_64` 的 `libfs.a`、C / C++ 头文件及模块查询、整数读取示例。两架构示例已通过 NDK 构建与链接验证。
 
 每个实例独立持有目标 PID 和读取器，可使用内置读写方式，也能接入自己的驱动实例或字节数回调。最低 API 24，使用 C++17；具体约定见 [libfs 使用说明](动态基址模板/cpp模板/libfs-使用说明.md)。
 
@@ -148,7 +161,7 @@ adb -s DEVICE_SERIAL forward tcp:47653 tcp:37653
 
 ```text
 fast-scan/
-├── 扫描软件/                  FastScan 3.0.8
+├── 扫描软件/                  FastScan 3.0.9
 ├── 测试软件/                  Pointer Chain Test 1.9
 ├── 动态基址模板/
 │   ├── cpp模板/               libfs.a、头文件与 C++ 示例
