@@ -50,8 +50,8 @@ def sha256(path: Path) -> str:
 def validate(root: Path, tag: str) -> dict:
     manifest = json.loads(source_file(root, 'releases/current.json').read_text(encoding='utf-8'))
     version = manifest['version']
-    if not isinstance(version, str) or not re.fullmatch(r'\d+\.\d+\.\d+', version):
-        raise ReleaseError('Only stable x.y.z versions are supported')
+    if not isinstance(version, str) or not re.fullmatch(r'\d+\.\d+\.\d+(?:_[1-9]\d*)?', version):
+        raise ReleaseError('Only stable x.y.z or x.y.z_N patch versions are supported')
     if tag != f'v{version}':
         raise ReleaseError(f'Tag {tag!r} must equal v{version}')
     try:

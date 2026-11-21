@@ -1,13 +1,13 @@
 {
-  "version": "3.0.8",
-  "release_date": "2026-11-20",
-  "apk": "FastScan-V3.0.8.apk",
+  "version": "3.0.8_1",
+  "release_date": "2026-11-21",
+  "apk": "FastScan-V3.0.8_1.apk",
   "manual": "FastScan-Next-使用手册.md",
-  "notes": "releases/3.0.8.md",
+  "notes": "releases/3.0.8_1.md",
   "source_archive": {
-    "name": "FastScan-Next-V3.0.8.zip",
-    "sha256": "3f39839e0d4d3dcb8ad920fac43810f8b4f4a868b857ece8e028d26ef2cf16d8",
-    "description": "本轮最新产物与文档输入快照，位于本地 release/v3.0.8/source；非历史发布 ZIP",
+    "name": "FastScan-Next-V3.0.8_1.zip",
+    "sha256": "ed0f55f6b3facd3316ffd53adcd04fe30ceb66b3862d5415ac0ba44e712160de",
+    "description": "3.0.8_1 经审核交付快照；来源在 release/v3.0.8_1/source",
     "modified_files": [
       "FastScan-Next-使用手册.md",
       "更新日志.md",
@@ -24,18 +24,18 @@
       "动态基址模板/cpp模板/lib/arm64-v8a/libfs.a",
       "动态基址模板/cpp模板/lib/x86_64/libfs.a",
       "动态基址模板/cpp模板/libfs-使用说明.md",
-      "动态基址模板/cpp模板/memory.cpp",
+      "动态基址模板/cpp模板/main.cpp",
       "动态基址模板/cpp模板/一键构建脚本.sh",
       "动态基址模板/lua模板/fscan基址模板.lua",
       "动态基址模板/下载配套Akode C++IDE提供内存模块.txt",
-      "FastScan-V3.0.8.apk",
+      "FastScan-V3.0.8_1.apk",
       "注意事项.txt",
-      "测试软件/Pointer-Chain-Test-1.9.apk"
+      "测试软件/Pointer-Chain-Test-1.9.apk",
+      "动态基址模板/cpp模板/include/libfs_drivers.hpp"
     ],
     "added_files": [
-      "测试软件/Pointer-Chain-Test-1.9.apk",
-      "动态基址模板/cpp模板/lib/arm64-v8a/libfs.a",
-      "动态基址模板/cpp模板/lib/x86_64/libfs.a"
+      "动态基址模板/cpp模板/main.cpp",
+      "动态基址模板/cpp模板/include/libfs_drivers.hpp"
     ]
   },
   "directories": [
@@ -56,14 +56,14 @@
     {
       "source": "FastScan-Next-使用手册.md",
       "archive_path": "FastScan-Next-使用手册.md",
-      "size": 62635,
-      "sha256": "f12bceea0ad9be4f8049c6480dee2c28c8ff6d0a90dba5c2818ffc63930e3595"
+      "size": 62837,
+      "sha256": "2a2c76b5c124fc8f664d6ca7c2790dd32ef47f7931259d99175e593bd861950e"
     },
     {
-      "source": "releases/3.0.8.md",
+      "source": "releases/3.0.8_1.md",
       "archive_path": "更新日志.md",
-      "size": 1916,
-      "sha256": "924306ffa3b21abca2f80b43bf3af86276c0f5c157f3a3a163cd1660c78cca74"
+      "size": 1111,
+      "sha256": "09a156530d2e5749c345100dfd8b3eafb4190b840e0c8a9102c2ff148d30a559"
     },
     {
       "source": "内核驱动/kpm/fscan-prctl.kpm",
@@ -98,8 +98,8 @@
     {
       "source": "动态基址模板/cpp模板/README.md",
       "archive_path": "动态基址模板/cpp模板/README.md",
-      "size": 1425,
-      "sha256": "18630937e27ebab82d9c40144121358fd13b230499877101b983043a29a3b9e9"
+      "size": 2973,
+      "sha256": "766bc74f3b36e837411a1bbec0e87f7472f4112e63c5f119d27ff6a9bbdeb75d"
     },
     {
       "source": "动态基址模板/cpp模板/include/libfs.h",
@@ -110,14 +110,14 @@
     {
       "source": "动态基址模板/cpp模板/include/libfs.hpp",
       "archive_path": "动态基址模板/cpp模板/include/libfs.hpp",
-      "size": 3278,
-      "sha256": "addc63e294b2e6aad74c412372b81ad154a589bf07f0418a2c302a0658f807df"
+      "size": 8656,
+      "sha256": "0eb0fa963ad7076ac3ad9ed9822251f5f5248353f0c6b51ce81137d5889f8efd"
     },
     {
       "source": "动态基址模板/cpp模板/jni/Android.mk",
       "archive_path": "动态基址模板/cpp模板/jni/Android.mk",
-      "size": 400,
-      "sha256": "a81193fce54bf98dd84f5f483ed66c507f9ae4ee92af8e29396f1ed99480e62f"
+      "size": 431,
+      "sha256": "8f8f52b246818d9311a7a91502d57390b0322971d5960401cc3613201296204d"
     },
     {
       "source": "动态基址模板/cpp模板/jni/Application.mk",
@@ -129,25 +129,25 @@
       "source": "动态基址模板/cpp模板/lib/arm64-v8a/libfs.a",
       "archive_path": "动态基址模板/cpp模板/lib/arm64-v8a/libfs.a",
       "size": 197688,
-      "sha256": "7a5a956d1206823c3eea5b169994717ceddab3cf08e5c5ef27f88c75e7420a19"
+      "sha256": "552ea7426268a873d78e43ce5aa254299b1cddc66e8019922807c65e7c9a90a6"
     },
     {
       "source": "动态基址模板/cpp模板/lib/x86_64/libfs.a",
       "archive_path": "动态基址模板/cpp模板/lib/x86_64/libfs.a",
       "size": 191408,
-      "sha256": "9574b61dd2b96213ffac62786f73fba84e6ac47c48ddd9f79e02000f4070bd6d"
+      "sha256": "ce90e5593115e3a5b7e458cfbf42acf82ac42314c7145095d68c02311387a62b"
     },
     {
       "source": "动态基址模板/cpp模板/libfs-使用说明.md",
       "archive_path": "动态基址模板/cpp模板/libfs-使用说明.md",
-      "size": 7582,
-      "sha256": "8e0f65732f4f3d0795812bf130c84c8580e9aa1a770253ef5e166285da882c3c"
+      "size": 9372,
+      "sha256": "7e60c38b28a5ead19f0684f171216e67f2ffbcdd8b55425d1cc99736c95f8969"
     },
     {
-      "source": "动态基址模板/cpp模板/memory.cpp",
-      "archive_path": "动态基址模板/cpp模板/memory.cpp",
-      "size": 1474,
-      "sha256": "5df8c45e220be746ca8bf2531cc5fcd460ce9c43cd32ad24355c55e45c988b21"
+      "source": "动态基址模板/cpp模板/main.cpp",
+      "archive_path": "动态基址模板/cpp模板/main.cpp",
+      "size": 2684,
+      "sha256": "964ea7bf16bacd8332555a45fd94410bf5e258a30939de93c3b8a1ee2d1410fc"
     },
     {
       "source": "动态基址模板/cpp模板/一键构建脚本.sh",
@@ -168,22 +168,28 @@
       "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
     },
     {
-      "source": "扫描软件/FastScan-V3.0.8.apk",
-      "archive_path": "FastScan-V3.0.8.apk",
+      "source": "扫描软件/FastScan-V3.0.8_1.apk",
+      "archive_path": "FastScan-V3.0.8_1.apk",
       "size": 21842377,
-      "sha256": "9210888fb8805e1dc2b307f026b2f9d21cfcef6a1c301b7161a9a40cb7eed209"
+      "sha256": "4480719f4e1d4167031321377f6a44ef7355f34a3ae190419934c0a15f12b2c4"
     },
     {
       "source": "注意事项.txt",
       "archive_path": "注意事项.txt",
-      "size": 1991,
-      "sha256": "2531b4ce706742a622106ac00217c0f8ac0a96a8fdc1e2d2e433357bf3d0d924"
+      "size": 1993,
+      "sha256": "3e323fcebe14f66a2e2cc1dab27c3263c7e7a8d6ad5c2ce7e5a99fc64ccfc030"
     },
     {
       "source": "测试软件/Pointer-Chain-Test-1.9.apk",
       "archive_path": "测试软件/Pointer-Chain-Test-1.9.apk",
       "size": 2488332,
       "sha256": "950ce83c04d73e6dd66069f57083de2e60e235b552d824739dd9afe64e214b4d"
+    },
+    {
+      "source": "动态基址模板/cpp模板/include/libfs_drivers.hpp",
+      "archive_path": "动态基址模板/cpp模板/include/libfs_drivers.hpp",
+      "size": 1512,
+      "sha256": "b6944e62518fe33c4854d448a3cc01165cfa523de0934fad4f5f68ce7e78124f"
     }
   ],
   "manual_asset": "FastScan-Next-Manual.md",

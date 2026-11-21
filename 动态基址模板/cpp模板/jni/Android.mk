@@ -8,7 +8,8 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := memory
-LOCAL_SRC_FILES := ../memory.cpp
+LOCAL_CPP_FEATURES := exceptions
+LOCAL_SRC_FILES := ../main.cpp
 LOCAL_CPPFLAGS := -std=c++17 -O2 -fvisibility=hidden
 LOCAL_STATIC_LIBRARIES := fs
 include $(BUILD_EXECUTABLE)

@@ -28,18 +28,18 @@ FastScan 是面向 Android 的指针链扫描与验证工具。选择目标进�
 
 这个仓库提供安装包、使用文档、指针测试工具及配套模板，不是完整 Android 应用与扫描核心的源码仓库。
 
-> 当前正式版：**3.0.8**。安装包、完整配套文件及更新内容请前往 Releases 下载查看。
+> 仓库版本：**3.0.8_1**（3.0.8 修复包；软件内部版本保持 3.0.8）。
 
 <br clear="right" />
 
 ## 下载安装
 
-前往 [Releases](https://github.com/AYssu/fast-scan/releases) 下载。以下是 3.0.8 的配套文件安排：
+前往 [Releases](https://github.com/AYssu/fast-scan/releases) 下载。以下是 3.0.8_1 的配套文件安排：
 
 | 文件 | 适合谁 | 包含什么 |
 | --- | --- | --- |
-| **FastScan-Next-V3.0.8.zip** | 首次使用，或需要配套工具 | FastScan APK、Pointer Chain Test、离线手册、可选驱动、libfs C++ 与 Lua 模板。 |
-| **FastScan-V3.0.8.apk** | 只需要安装或升级应用 | Android 安装包，支持 ARM64 与 x86_64。 |
+| **FastScan-Next-V3.0.8_1.zip** | 首次使用，或需要配套工具 | FastScan APK、Pointer Chain Test、离线手册、可选驱动、libfs C++ 与 Lua 模板。 |
+| **FastScan-V3.0.8_1.apk** | 只需要安装或升级应用 | Android 安装包，支持 ARM64 与 x86_64。 |
 | **FastScan-Next-Manual.md** | 希望离线查阅操作 | 使用流程、参数说明、MCP 连接与常见问题。 |
 | **SHA256SUMS** | 需要核对下载完整性 | 对应发布附件的 SHA-256 校验值。 |
 

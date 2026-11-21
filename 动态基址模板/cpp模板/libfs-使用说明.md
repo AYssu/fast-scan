@@ -1,6 +1,6 @@
 # libfs
 
-面向 Android/Linux 的轻量进程内存与模块 SDK，C++17 实现，提供 C ABI 和 C++ 独立实例封装。当前版本 0.1.0。
+面向 Android/Linux 的轻量进程内存与模块 SDK，C++17 实现，提供 C ABI 和 C++ 独立实例封装。当前版本 0.1.1。
 
 SeaAlpha 的 `driver_base` 对象和读写回调适合作为接入方式；但它的 PID、回调和模块列表是全局静态状态，完整静态库还会合并网络、SSL、readline、ncurses 等组件。libfs 单独保留读写和模块能力，每个实例各自持有 PID、读写器、资源及模块快照。
 
@@ -20,7 +20,7 @@ SeaAlpha 的 `driver_base` 对象和读写回调适合作为接入方式；但�
 
 使用 Android NDK、C++17，按模板 README 执行一键构建脚本。jni/Android.mk 已声明预编译静态库，jni/Application.mk 使用 c++_static，无需额外携带 libfs.so。也可在自己的 CMake 工程创建 IMPORTED STATIC 目标，指定对应架构库与 include/，链接 C++ 运行库及线程依赖。
 
-此分发只包含 SDK 头文件、静态库和调用示例，不包含 libfs 源码构建工程。示例 memory PID 列出模块，memory PID 0x地址 读取一个 int32。
+此分发只包含 SDK 头文件、静态库和调用示例，不包含 libfs 源码构建工程。示例 main.cpp 修改顶部包名、模块和指针链后，直接运行 memory 即可查询目标并读取最终数值。
 
 ## C++ 实例
 
@@ -104,3 +104,15 @@ APK 内 SO 识别要求可访问 APK、未压缩且对齐的原生库条目；ZI
 ## 配套文件验证
 
 本分发已使用配套两架构静态库与头文件构建 Android 示例。构建通过不等于所有设备具备跨进程权限；实际访问取决于调用进程。
+
+## 简化指针模板
+
+当前 `main.cpp` 可按包名自动查询 PID，再按模块和偏移链读取数值，无需传入命令行地址。`find_pid` 精确匹配进程名，多个同名进程返回 `-EEXIST`，不会任意选分身。`pointer64` / `pointer32` 的最后一级只加偏移，其余各级读取目标位数指针；失败保留输出地址原值。上述为 C++ 便捷封装，原 C ABI 与独立实例调用保持兼容。
+
+## 多模块与多链条便捷调用
+
+包名只用于一次 PID 查找；随后在同一个 Memory 实例上自由添加模块与链条。`get_module_base_str("libgame.so", 1, "Cb")` 直接返回所选模块区域起点，范围支持 Xa/Cd/Cb/Cdro/Cdx。`lsp64(address)` 读取一次指针，`read_pointer(base, {偏移1, 偏移2, 最终偏移})` 解析完整 64 位链条；32 位使用 lsp32/read_pointer32。read_int/read_float/read_double 返回数值，读取或模块查询失败抛异常；write_int/write_float/write_double 返回 bool。原始无异常接口继续可用，目标状态仍由实例持有。
+
+## 模板采用读写器动态注入
+
+包含 `libfs_drivers.hpp`，在初始化处创建 `SyscallDriver` 或 `PreadDriver`，设置 PID 后通过 `Memory(pid, std::move(driver))` 注入。扩展自己的驱动只需继承 `libfs::Driver` 并实现 `set_pid/read/write`；模块、lsp64、read_pointer 和各类型读写的用户代码无需切换后端枚举。所有解引用和数据读写都调用注入的实例；模块列表来自目标 maps，不由读写器提供。布尔 read/write 只有完整完成才返回 true，失败的部分写入不保证回滚。Memory 持有并释放驱动，不使用全局读写状态。不要在其他线程操作期间重新设置 PID。
