@@ -1,17 +1,17 @@
 {
-  "version": "3.0.9",
-  "release_date": "2026-11-22",
-  "apk": "FastScan-V3.0.9.apk",
+  "version": "3.0.9_1",
+  "release_date": "2026-11-23",
+  "apk": "FastScan-V3.0.9_1.apk",
   "manual": "FastScan-Next-使用手册.md",
-  "notes": "releases/3.0.9.md",
+  "notes": "releases/3.0.9_1.md",
   "source_archive": {
-    "name": "FastScan-Next-V3.0.9.zip",
-    "sha256": "11bf2d4e6794494c895e7e250671699cc6c0ca0bcb74f1ce38b69463576a4a3b",
-    "description": "3.0.9 经审核交付输入快照；来源在 release/v3.0.9/source，扫描核心、libfs 和测试工具沿用现有配套产物",
+    "name": "FastScan-Next-V3.0.9_1.zip",
+    "sha256": "6f58adc08074528e259bd33709d952bdaa0acd08c20bb42a7ce6d682c41e3ddc",
+    "description": "3.0.9_1 已审核修复包输入快照；来源 release/v3.0.9_1/source",
     "modified_files": [
       "FastScan-Next-使用手册.md",
       "更新日志.md",
-      "FastScan-V3.0.9.apk",
+      "FastScan-V3.0.9_1.apk",
       "注意事项.txt"
     ],
     "added_files": []
@@ -34,14 +34,14 @@
     {
       "source": "FastScan-Next-使用手册.md",
       "archive_path": "FastScan-Next-使用手册.md",
-      "size": 66249,
-      "sha256": "e8b69420da6ebcf5b6c8e8b1c73faaae706d9139a0e979e35bc8765810dd824f"
+      "size": 66691,
+      "sha256": "35141276071e5914b69289c21bb4010bad244dc7916d2d4095a4952968eccfac"
     },
     {
-      "source": "releases/3.0.9.md",
+      "source": "releases/3.0.9_1.md",
       "archive_path": "更新日志.md",
-      "size": 1230,
-      "sha256": "6e1b87eb17361f1ef0e1c98240474f317ce0e2fabb3e24b90a8420736d274061"
+      "size": 762,
+      "sha256": "0536b7872bb9274da79dd5d98fd89d28cab3b8343e7eb1025d7d06c0ed6dfd8d"
     },
     {
       "source": "内核驱动/kpm/fscan-prctl.kpm",
@@ -146,16 +146,16 @@
       "sha256": "d9ba65e948c31ca70d30aceaa8ba59e25646bd0dbced8feaae8ec0ad23016484"
     },
     {
-      "source": "扫描软件/FastScan-V3.0.9.apk",
-      "archive_path": "FastScan-V3.0.9.apk",
-      "size": 21963785,
-      "sha256": "034c58df5b2a989a4d7ce335bf5e4ea43ffadcf8af658a817aab20e9f10e426a"
+      "source": "扫描软件/FastScan-V3.0.9_1.apk",
+      "archive_path": "FastScan-V3.0.9_1.apk",
+      "size": 21963657,
+      "sha256": "f831367ef3c38db9d6c69411e08f4d3990577aee9e4038040bb8377d7776133e"
     },
     {
       "source": "注意事项.txt",
       "archive_path": "注意事项.txt",
-      "size": 2260,
-      "sha256": "9e93cd82769d2d2e23674b8a771c0748bfab2a82bd1c51e12bce5924d51356d6"
+      "size": 2294,
+      "sha256": "933a392cd52414dd8987d45a265aefcdc0fd0048d4045da19b527856aee551fb"
     },
     {
       "source": "测试软件/Pointer-Chain-Test-1.9.apk",
